@@ -46,14 +46,14 @@ class DayColumnHeader: UIView {
 
         addSubview(weekLabel)
         addSubview(dayLabel)
-        addSubview(weatherImageView)
+//        addSubview(weatherImageView)
 
         weekLabel.font = .systemFont(
             ofSize: UIFont.smallSystemFontSize,
             weight: .medium
         )
         weekLabel.textAlignment = .center
-        weatherImageView.contentMode = .center
+//        weatherImageView.contentMode = .center
     }
 
     required init?(coder: NSCoder) {
@@ -70,46 +70,48 @@ class DayColumnHeader: UIView {
         }
     }
 
+    // h = 56
     private func regularLayout() {
         weekLabel.frame = .init(
             x: 0,
-            y: 0,
+            y: 4,
             width: bounds.width,
             height: weekLabelHeight
         )
         dayLabel.frame = .init(
             x: 0,
-            y: weekLabelHeight,
+            y: weekLabelHeight + 8,
             width: bounds.width,
             height: dayLabelHeight
         )
-        weatherImageView.frame = .init(
-            x: 0,
-            y: weekLabelHeight + dayLabelHeight,
-            width: bounds.width,
-            height: weatherButtonHeight
-        )
+//        weatherImageView.frame = .init(
+//            x: 0,
+//            y: weekLabelHeight + dayLabelHeight,
+//            width: bounds.width,
+//            height: weatherButtonHeight
+//        )
     }
 
+    // h = 32
     private func compactLayout() {
         weekLabel.frame = .init(
             x: 0,
-            y: 0,
+            y: (bounds.height - weekLabelHeight) * 0.5,
             width: bounds.midX,
             height: weekLabelHeight
         )
         dayLabel.frame = .init(
-            x: 0,
-            y: weekLabelHeight,
-            width: bounds.midX,
-            height: dayLabelHeight
-        )
-        weatherImageView.frame = .init(
             x: bounds.midX,
-            y: weekLabelHeight,
+            y: 4,
             width: bounds.midX,
             height: dayLabelHeight
         )
+//        weatherImageView.frame = .init(
+//            x: bounds.midX,
+//            y: weekLabelHeight,
+//            width: bounds.midX,
+//            height: dayLabelHeight
+//        )
     }
 }
 

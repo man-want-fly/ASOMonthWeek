@@ -53,7 +53,7 @@ class DayColumnCell: UICollectionViewCell, Reusable {
 
     var markColor: UIColor = .black
     var separatorColor: UIColor = .separator
-    var headerHeight: CGFloat = 72 {
+    var headerHeight: CGFloat = 56 {
         didSet {
             guard headerHeight != oldValue else { return }
             setNeedsLayout()
@@ -132,7 +132,7 @@ class DayColumnCell: UICollectionViewCell, Reusable {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         
         if traitCollection != previousTraitCollection {
-            headerHeight = traitCollection.isPortrait ? 72 : 48
+            headerHeight = traitCollection.isPortrait ? 56 : 32
         }
     }
 }

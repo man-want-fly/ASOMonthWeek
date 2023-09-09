@@ -114,7 +114,7 @@ public class DayPlanView: UIView {
 
     var timeColumnWidth: CGFloat = 60
 
-    public var dayHeaderHeight: CGFloat = 72 {
+    public var dayHeaderHeight: CGFloat = 56 {
         didSet {
             guard dayHeaderHeight != oldValue else { return }
             setupSubviews()
