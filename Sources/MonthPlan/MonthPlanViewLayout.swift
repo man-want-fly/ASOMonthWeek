@@ -121,7 +121,7 @@ public class MonthPlanViewLayout: UICollectionViewFlowLayout {
                     x: widthForColumnRange(NSMakeRange(0, col)) + pageWidth * CGFloat(month),
                     y: monthHeaderHeight + CGFloat(row) * weekHeight + CGFloat(row) * dayHeaderHeight
                         + dayHeaderHeight,
-                    width: pageWidth,
+                    width: widthForColumnRange(NSMakeRange(col, colRange.length)),
                     height: weekHeight
                 )
                 eventAttributes.zIndex = 2
