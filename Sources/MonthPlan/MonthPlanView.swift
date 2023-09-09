@@ -9,15 +9,6 @@ import OrderedCollections
 import Reusable
 import UIKit
 
-struct MonthHeaderStyle: OptionSet {
-
-    let rawValue: Int
-
-    static let `default` = MonthHeaderStyle([])
-    static let short = MonthHeaderStyle(rawValue: 1 << 0)
-    static let hidden = MonthHeaderStyle(rawValue: 1 << 1)
-}
-
 enum MonthPlanStyle: Int {
     case events = 0
     case dots, empty
@@ -66,13 +57,6 @@ public class MonthPlanView: UIView {
             guard monthInsets != oldValue else { return }
             //            layout.monthInsets = monthInsets
             setNeedsLayout()
-        }
-    }
-
-    var monthHeaderStyle: MonthHeaderStyle = .default {
-        didSet {
-            guard monthHeaderStyle != oldValue else { return }
-            eventsView.reloadData()
         }
     }
 
@@ -1313,17 +1297,11 @@ extension MonthPlanView: UICollectionViewDataSource {
             ) as? MonthPlanMonthHeaderView
         else { return .init(frame: .zero) }
 
-        view.label.isHidden = monthHeaderStyle == .hidden
-
-        let dateFormatter = DateFormatter()
+        let dateFormatter = DateFormatter() // TODO: DateFormatter
         dateFormatter.calendar = calendar
         view.weekStrings = dateFormatter.shortStandaloneWeekdaySymbols
 
-        if monthHeaderStyle == .hidden {
-            return view
-        }
-
-        var fmtTemplate = monthHeaderStyle == .short ? "MMMM" : "MMMMYYYY"
+        var fmtTemplate = "MMMMYYYY"
         headerDateFormatter.dateFormat = DateFormatter.dateFormat(
             fromTemplate: fmtTemplate,
             options: 0,
@@ -1337,8 +1315,8 @@ extension MonthPlanView: UICollectionViewDataSource {
         var attrStr = NSMutableAttributedString(
             string: str,
             attributes: [
-                NSAttributedString.Key.font: font,
-                NSAttributedString.Key.foregroundColor: monthLabelTextColor,
+                .font: font,
+                .foregroundColor: monthLabelTextColor,
             ]
         )
 
@@ -1356,8 +1334,8 @@ extension MonthPlanView: UICollectionViewDataSource {
             at: indexPath
         )!
 
-        if strRect.size.width > attribs.frame.size.width {
-            fmtTemplate = monthHeaderStyle == .short ? "MMM" : "MMMYY"
+        if strRect.width > attribs.frame.width {
+            fmtTemplate = "MMMYY"
             headerDateFormatter.dateFormat = DateFormatter.dateFormat(
                 fromTemplate: fmtTemplate,
                 options: 0,
@@ -1368,18 +1346,18 @@ extension MonthPlanView: UICollectionViewDataSource {
             attrStr = NSMutableAttributedString(
                 string: str,
                 attributes: [
-                    NSAttributedString.Key.font: font,
-                    NSAttributedString.Key.foregroundColor: monthLabelTextColor,
+                    .font: font,
+                    .foregroundColor: monthLabelTextColor,
                 ]
             )
         }
 
         if gridStyle.contains(.fill) {
             let para = NSMutableParagraphStyle()
-            para.alignment = .center
+            para.alignment = UIDevice.current.orientation.isLandscape ? .center : .left
 
             attrStr.addAttribute(
-                NSAttributedString.Key.paragraphStyle,
+                .paragraphStyle,
                 value: para,
                 range: NSRange(location: 0, length: str.count)
             )
