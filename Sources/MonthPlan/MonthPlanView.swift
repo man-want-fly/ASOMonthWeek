@@ -865,31 +865,35 @@ public class MonthPlanView: UIView {
     private func eventsRowView(at rowStart: Date) -> EventsRowView? {
         if let eventsView = eventRows[rowStart] {
             return eventsView
-        } else {
-            guard
-                let eventsRowView = reuseQueue.dequeue(
-                    by: ReusableConstants.Identifier.eventsRowView
-                ) as? EventsRowView
-            else { return nil }
-            let referenceDate = calendar.startOfMonth(for: rowStart)
-            let first = calendar.dateComponents([.day], from: referenceDate, to: rowStart).day
-            let numDays = calendar.range(of: .day, in: .weekOfMonth, for: rowStart)?.count
-
-            eventsRowView.referenceDate = referenceDate
-            eventsRowView.isScrollEnabled = false
-            eventsRowView.itemHeight = itemHeight
-            eventsRowView.eventsRowDelegate = self
-            eventsRowView.daysRange = NSMakeRange(first!, numDays!)
-
-            eventsRowView.reload()
-            cacheRow(eventsRowView, for: rowStart)
-
-            return eventsRowView
         }
+        
+        guard
+            let eventsRowView = reuseQueue.dequeue(
+                by: ReusableConstants.Identifier.eventsRowView
+            ) as? EventsRowView
+        else { return nil }
+        
+        let referenceDate = calendar.startOfMonth(for: rowStart)
+        
+        guard
+            let first = calendar.dateComponents([.day], from: referenceDate, to: rowStart).day,
+            let numDays = calendar.range(of: .day, in: .weekOfMonth, for: rowStart)?.count
+        else { return nil }
+
+        eventsRowView.referenceDate = referenceDate
+        eventsRowView.isScrollEnabled = false
+        eventsRowView.itemHeight = itemHeight
+        eventsRowView.eventsRowDelegate = self
+        eventsRowView.daysRange = NSMakeRange(first, numDays)
+
+        eventsRowView.reload()
+        cacheRow(eventsRowView, for: rowStart)
+
+        return eventsRowView
     }
 
     private func cacheRow(_ eventsView: EventsRowView, for date: Date) {
-        if let rowView = eventRows[date] {
+        if let _ = eventRows[date] {
             // if already in the cache, we remove it first
             // because we want to keep the list in strict MRU order
             eventRows.removeValue(forKey: date)
