@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol MonthPlanViewDataSource: AnyObject {
+public protocol MonthPlanViewDataSource: AnyObject {
 
     func monthPlanView(
         _ monthPlanView: MonthPlanView,
@@ -55,7 +55,7 @@ protocol MonthPlanViewDataSource: AnyObject {
 //    }
 //}
 
-protocol MonthPlanViewDelegate: AnyObject {
+public protocol MonthPlanViewDelegate: AnyObject {
 
     func monthPlanView(
         _ monthPlanView: MonthPlanView,

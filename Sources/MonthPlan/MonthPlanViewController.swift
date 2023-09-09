@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MonthPlanViewController: UIViewController, MonthPlanViewDataSource, MonthPlanViewDelegate {
+open class MonthPlanViewController: UIViewController, MonthPlanViewDataSource, MonthPlanViewDelegate {
     
     var monthPlanView: MonthPlanView = .init(frame: .zero) {
         didSet {
@@ -16,7 +16,7 @@ class MonthPlanViewController: UIViewController, MonthPlanViewDataSource, MonthP
         }
     }
         
-    override func loadView() {
+    open override func loadView() {
 //        super.loadView()
 
         monthPlanView = .init(frame: .zero)
@@ -24,21 +24,21 @@ class MonthPlanViewController: UIViewController, MonthPlanViewDataSource, MonthP
         view = monthPlanView
     }
 
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         
         monthPlanView.dataSource = self
         monthPlanView.delegate = self
     }
     
-    func monthPlanView(
+    public func monthPlanView(
         _ monthPlanView: MonthPlanView,
         numberOfEventsAt date: Date
     ) -> Int {
         fatalError("must subclass")
     }
 
-    func monthPlanView(
+    public func monthPlanView(
         _ monthPlanView: MonthPlanView,
         dateRangeForEventAt index: Int,
         date: Date
@@ -46,7 +46,7 @@ class MonthPlanViewController: UIViewController, MonthPlanViewDataSource, MonthP
         fatalError("must subclass")
     }
 
-    func monthPlanView(
+    public func monthPlanView(
         _ monthPlanView: MonthPlanView,
         cellForEventAt index: Int,
         date: Date
@@ -54,14 +54,14 @@ class MonthPlanViewController: UIViewController, MonthPlanViewDataSource, MonthP
         fatalError("must subclass")
     }
 
-    func monthPlanView(
+    public func monthPlanView(
         _ monthPlanView: MonthPlanView,
         cellForNewEventAt date: Date
     ) -> EventView {
         fatalError("must subclass")
     }
 
-    func monthPlanView(
+    public func monthPlanView(
         _ monthPlanView: MonthPlanView,
         canMoveCellForEventAt index: Int,
         date: Date
@@ -69,25 +69,25 @@ class MonthPlanViewController: UIViewController, MonthPlanViewDataSource, MonthP
         fatalError("must subclass")
     }
     
-    func monthPlanView(
+    public func monthPlanView(
         _ monthPlanView: MonthPlanView,
         attributedStringForDayHeaderAt date: Date
     ) -> NSAttributedString? {
         fatalError("must subclass")
     }
 
-    func monthPlanViewDidScroll(_ monthPlanView: MonthPlanView) {
+    public func monthPlanViewDidScroll(_ monthPlanView: MonthPlanView) {
         fatalError("must subclass")
     }
 
-    func monthPlanView(
+    public func monthPlanView(
         _ monthPlanView: MonthPlanView,
         didSelectDayCellAt date: Date
     ) {
         fatalError("must subclass")
     }
 
-    func monthPlanView(
+    public func monthPlanView(
         _ monthPlanView: MonthPlanView,
         didShow cell: EventView,
         forNewEventAt date: Date
@@ -95,7 +95,7 @@ class MonthPlanViewController: UIViewController, MonthPlanViewDataSource, MonthP
         fatalError("must subclass")
     }
 
-    func monthPlanView(
+    public func monthPlanView(
         _ monthPlanView: MonthPlanView,
         willStartMovingEventAt index: Int,
         date: Date
@@ -103,7 +103,7 @@ class MonthPlanViewController: UIViewController, MonthPlanViewDataSource, MonthP
         fatalError("must subclass")
     }
 
-    func monthPlanView(
+    public func monthPlanView(
         _ monthPlanView: MonthPlanView,
         didMoveEventAt index: Int,
         fromDate: Date,
@@ -112,7 +112,7 @@ class MonthPlanViewController: UIViewController, MonthPlanViewDataSource, MonthP
         fatalError("must subclass")
     }
 
-    func monthPlanView(
+    public func monthPlanView(
         _ monthPlanView: MonthPlanView,
         shouldSelectEventAt index: Int,
         date: Date
@@ -120,7 +120,7 @@ class MonthPlanViewController: UIViewController, MonthPlanViewDataSource, MonthP
         fatalError("must subclass")
     }
 
-    func monthPlanView(
+    public func monthPlanView(
         _ monthPlanView: MonthPlanView,
         didSelectEventAt index: Int,
         date: Date
@@ -128,7 +128,7 @@ class MonthPlanViewController: UIViewController, MonthPlanViewDataSource, MonthP
         fatalError("must subclass")
     }
 
-    func monthPlanView(
+    public func monthPlanView(
         _ monthPlanView: MonthPlanView,
         shouldDeselectEventAt index: Int,
         date: Date
@@ -136,7 +136,7 @@ class MonthPlanViewController: UIViewController, MonthPlanViewDataSource, MonthP
         fatalError("must subclass")
     }
 
-    func monthPlanView(
+    public func monthPlanView(
         _ monthPlanView: MonthPlanView,
         didDeselectEventAt index: Int,
         date: Date

@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol MonthPlannerViewLayoutDelegate: UICollectionViewDelegate {
+public protocol MonthPlannerViewLayoutDelegate: UICollectionViewDelegate {
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -16,7 +16,7 @@ protocol MonthPlannerViewLayoutDelegate: UICollectionViewDelegate {
     ) -> Int
 }
 
-class MonthPlanViewLayout: UICollectionViewFlowLayout {
+public class MonthPlanViewLayout: UICollectionViewFlowLayout {
 
     typealias LayoutItems = [IndexPath: UICollectionViewLayoutAttributes]
 
@@ -55,7 +55,7 @@ class MonthPlanViewLayout: UICollectionViewFlowLayout {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func prepare() {
+    public override func prepare() {
         guard let collectionView else { return }
 
         var layoutInfo = [ElementKind: LayoutItems]()
@@ -213,11 +213,11 @@ class MonthPlanViewLayout: UICollectionViewFlowLayout {
         return attributes
     }
 
-    override var collectionViewContentSize: CGSize {
+    public override var collectionViewContentSize: CGSize {
         .init(width: contentWidth, height: collectionView!.bounds.height)
     }
 
-    override func layoutAttributesForElements(in rect: CGRect)
+    public override func layoutAttributesForElements(in rect: CGRect)
         -> [UICollectionViewLayoutAttributes]?
     {
 
@@ -234,14 +234,14 @@ class MonthPlanViewLayout: UICollectionViewFlowLayout {
         return allAttribs
     }
 
-    override func layoutAttributesForItem(at indexPath: IndexPath)
+    public override func layoutAttributesForItem(at indexPath: IndexPath)
         -> UICollectionViewLayoutAttributes?
     {
         let dict = layoutInfo[.day]
         return dict?[indexPath]
     }
 
-    override func layoutAttributesForSupplementaryView(
+    public override func layoutAttributesForSupplementaryView(
         ofKind elementKind: String,
         at indexPath: IndexPath
     ) -> UICollectionViewLayoutAttributes? {
@@ -272,7 +272,7 @@ class MonthPlanViewLayout: UICollectionViewFlowLayout {
         widthForColumnRange(NSMakeRange(colIndex, 1))
     }
 
-    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+    public override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         guard let oldBounds = collectionView?.bounds else { return false }
         return oldBounds.width != newBounds.width
     }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol EventsRowViewDelegate: UIScrollViewDelegate {
+public protocol EventsRowViewDelegate: UIScrollViewDelegate {
 
     func eventsRowView(_ eventsRowView: EventsRowView, numberOfEventsForDayAtIndex day: Int) -> Int
     func eventsRowView(_ eventsRowView: EventsRowView, rangeForEventAt indexPath: IndexPath)
@@ -34,8 +34,8 @@ protocol EventsRowViewDelegate: UIScrollViewDelegate {
     )
 }
 
-class EventsRowView: UIScrollView, ReusableObject {
-    var reuseIdentifier: String = "EventsRowView"
+public class EventsRowView: UIScrollView, ReusableObject {
+    public var reuseIdentifier: String = "EventsRowView"
     var referenceDate: Date?
     var daysRange: NSRange = .init()
     var dayWidth: CGFloat = 100
@@ -67,13 +67,13 @@ class EventsRowView: UIScrollView, ReusableObject {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
 
         reload()
     }
 
-    func prepareForReuse() {
+    public func prepareForReuse() {
         recycleEventsCells()
     }
 

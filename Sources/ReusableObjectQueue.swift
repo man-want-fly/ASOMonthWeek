@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ReusableObject: AnyObject {
+public protocol ReusableObject: AnyObject {
 
     var reuseIdentifier: String { get set }
 
@@ -16,7 +16,7 @@ protocol ReusableObject: AnyObject {
     init()
 }
 
-class ReusableObjectQueue {
+public class ReusableObjectQueue {
 
     typealias T = ReusableObject
 

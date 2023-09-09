@@ -7,19 +7,19 @@
 
 import UIKit
 
-enum EventType: Int {
+public enum EventType: Int {
     case allDay = 0, timed
 }
 
-class EventView: UIView, ReusableObject {
+public class EventView: UIView, ReusableObject {
     
-    var reuseIdentifier: String = "EventView"
+    public var reuseIdentifier: String = "EventView"
     
     var selected: Bool = false
     
     var visibleHeight: CGFloat = .greatestFiniteMagnitude
     
-    func prepareForReuse() {
+    public func prepareForReuse() {
         selected = false
     }
     

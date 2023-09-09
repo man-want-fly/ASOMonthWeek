@@ -7,9 +7,13 @@
 
 import UIKit
 
-struct StandardEventViewStyle: OptionSet {
+public struct StandardEventViewStyle: OptionSet {
 
-    let rawValue: Int
+    public let rawValue: Int
+    
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
 
     static let `default`: StandardEventViewStyle = []
     static let plain = StandardEventViewStyle(rawValue: 1 << 0)
@@ -18,7 +22,7 @@ struct StandardEventViewStyle: OptionSet {
     static let detail = StandardEventViewStyle(rawValue: 1 << 3)
 }
 
-class StandardEventView: EventView {
+public class StandardEventView: EventView {
 
     var title: String?
     var subtitle: String?
@@ -45,7 +49,7 @@ class StandardEventView: EventView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
 
         leftBorderView.frame = .init(
@@ -70,12 +74,12 @@ class StandardEventView: EventView {
         }
     }
 
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         super.prepareForReuse()
         setNeedsDisplay()
     }
 
-    override func draw(_ rect: CGRect) {
+    public override func draw(_ rect: CGRect) {
 
         let space: CGFloat = 2
 

@@ -8,7 +8,7 @@
 import EventKit
 import UIKit
 
-class EventKitSupport: NSObject {
+public class EventKitSupport: NSObject {
 
     var savedEvent: EKEvent?
 
@@ -95,7 +95,7 @@ class EventKitSupport: NSObject {
 
 extension EventKitSupport: UIAlertViewDelegate {
 
-    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
+    public func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
         
         assert(savedEvent != nil, "Saved event is nil")
 

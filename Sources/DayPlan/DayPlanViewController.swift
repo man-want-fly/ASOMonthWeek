@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPlanViewDelegate {
+open class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPlanViewDelegate {
 
     var dayPlanView: DayPlanView {
         set {
@@ -26,7 +26,7 @@ class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPlanVie
 
     private var firstVisibleDayForRotation: Date?
 
-    override func loadView() {
+    open override func loadView() {
 
         let dayPlanView = DayPlanView()
         dayPlanView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -34,7 +34,7 @@ class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPlanVie
         self.dayPlanView.autoresizesSubviews = true
     }
 
-    override func viewDidLayoutSubviews() {
+    open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
         guard headerView == nil, showsWeekHeaderView else { return }
@@ -45,7 +45,7 @@ class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPlanVie
         setupHeaderView()
     }
 
-    override func viewWillTransition(
+    open override func viewWillTransition(
         to size: CGSize,
         with coordinator: UIViewControllerTransitionCoordinator
     ) {

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class DateRange: NSObject, NSCopying {
+public class DateRange: NSObject, NSCopying {
 
     var start: Date
     var end: Date
@@ -92,11 +92,11 @@ class DateRange: NSObject, NSCopying {
         }
     }
 
-    func copy(with zone: NSZone? = nil) -> Any {
+    public func copy(with zone: NSZone? = nil) -> Any {
         DateRange(start: start, end: end)
     }
 
-    override func isEqual(_ object: Any?) -> Bool {
+    public override func isEqual(_ object: Any?) -> Bool {
         guard let object = object as? DateRange else { return false }
 
         //        if self == object {
@@ -106,11 +106,11 @@ class DateRange: NSObject, NSCopying {
         return isEqual(to: object)
     }
 
-    override var hash: Int {
+    public override var hash: Int {
         start.hashValue ^ end.hashValue
     }
 
-    override var description: String {
+    public override var description: String {
         return """
                 start: \(start)
                 end: \(end)

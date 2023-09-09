@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Calendar {
+public extension Calendar {
     
     func startDayOfStartWeek(for date: Date) -> Date {
         startOfWeek(for: startOfMonth(for: date))

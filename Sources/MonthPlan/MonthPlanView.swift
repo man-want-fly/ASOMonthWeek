@@ -48,7 +48,7 @@ private let dragScrollZoneSize: CGFloat = 20
 private let defaultDateFormat = "dMMYY"
 private let rowCacheSize = 40
 
-class MonthPlanView: UIView {
+public class MonthPlanView: UIView {
 
     var calendar: Calendar = .current
 
@@ -630,7 +630,7 @@ class MonthPlanView: UIView {
         )
     }
 
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
 
         // the order in which subviews are added is important here -
@@ -1244,11 +1244,11 @@ class MonthPlanView: UIView {
 
 // MARK: - UICollectionViewDataSource
 extension MonthPlanView: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
         numberOfLoadedMonths
     }
 
-    func collectionView(
+    public func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
@@ -1256,7 +1256,7 @@ extension MonthPlanView: UICollectionViewDataSource {
         return num
     }
 
-    func collectionView(
+    public func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
@@ -1418,7 +1418,7 @@ extension MonthPlanView: UICollectionViewDataSource {
         return view
     }
 
-    func collectionView(
+    public func collectionView(
         _ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
@@ -1440,7 +1440,7 @@ extension MonthPlanView: UICollectionViewDataSource {
 // MARK: - EventsRowViewDelegate
 extension MonthPlanView: EventsRowViewDelegate {
 
-    func eventsRowView(
+    public func eventsRowView(
         _ eventsRowView: EventsRowView,
         numberOfEventsForDayAtIndex day: Int
     ) -> Int {
@@ -1450,7 +1450,7 @@ extension MonthPlanView: EventsRowViewDelegate {
         return count ?? 0
     }
 
-    func eventsRowView(
+    public func eventsRowView(
         _ eventsRowView: EventsRowView,
         rangeForEventAt indexPath: IndexPath
     ) -> NSRange {
@@ -1484,7 +1484,7 @@ extension MonthPlanView: EventsRowViewDelegate {
         return NSMakeRange(start, end - start)
     }
 
-    func eventsRowView(
+    public func eventsRowView(
         _ eventsRowView: EventsRowView,
         cellForEventAt indexPath: IndexPath
     ) -> EventView {
@@ -1493,14 +1493,14 @@ extension MonthPlanView: EventsRowViewDelegate {
         return dataSource!.monthPlanView(self, cellForEventAt: indexPath.item, date: date)
     }
 
-    func eventsRowView(
+    public func eventsRowView(
         _ eventsRowView: EventsRowView,
         widthForDayRange range: NSRange
     ) -> CGFloat {
         layout.widthForColumnRange(range)
     }
 
-    func eventsRowView(
+    public func eventsRowView(
         _ eventsRowView: EventsRowView,
         shouldSelectCellAt indexPath: IndexPath
     ) -> Bool {
@@ -1518,7 +1518,7 @@ extension MonthPlanView: EventsRowViewDelegate {
             ?? false
     }
 
-    func eventsRowView(
+    public func eventsRowView(
         _ eventsRowView: EventsRowView,
         didSelectCellAt indexPath: IndexPath
     ) {
@@ -1533,7 +1533,7 @@ extension MonthPlanView: EventsRowViewDelegate {
         delegate?.monthPlanView(self, didSelectEventAt: indexPath.item, date: date)
     }
 
-    func eventsRowView(
+    public func eventsRowView(
         _ eventsRowView: EventsRowView,
         shouldDeselectCellAt indexPath: IndexPath
     ) -> Bool {
@@ -1548,7 +1548,7 @@ extension MonthPlanView: EventsRowViewDelegate {
             ) ?? false
     }
 
-    func eventsRowView(
+    public func eventsRowView(
         _ eventsRowView: EventsRowView,
         didDeselectCellAt indexPath: IndexPath
     ) {
@@ -1568,7 +1568,7 @@ extension MonthPlanView: EventsRowViewDelegate {
             )
     }
 
-    func eventsRowView(
+    public func eventsRowView(
         _ eventsRowView: EventsRowView,
         willDisplay cell: EventView,
         forEventAt indexPath: IndexPath
@@ -1576,7 +1576,7 @@ extension MonthPlanView: EventsRowViewDelegate {
 
     }
 
-    func eventsRowView(
+    public func eventsRowView(
         _ eventsRowView: EventsRowView,
         didEndDisplaying cell: EventView,
         forEventAt indexPath: IndexPath
@@ -1588,7 +1588,7 @@ extension MonthPlanView: EventsRowViewDelegate {
 // MARK: - MonthPlannerViewLayoutDelegate
 extension MonthPlanView: MonthPlannerViewLayoutDelegate {
 
-    func collectionView(
+    public func collectionView(
         _ collectionView: UICollectionView,
         layout: MonthPlanViewLayout,
         columnForDayAt indexPath: IndexPath
@@ -1596,7 +1596,7 @@ extension MonthPlanView: MonthPlannerViewLayoutDelegate {
         columnForDay(at: indexPath)
     }
 
-    func collectionView(
+    public func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
@@ -1608,7 +1608,7 @@ extension MonthPlanView: MonthPlannerViewLayoutDelegate {
         }
     }
 
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         print("scrollViewDidScroll xOffset: \(eventsView.contentOffset.x)")
         print(
             "scrollViewDidScroll VisibleItems.count: \(eventsView.indexPathsForVisibleItems.count)"

@@ -11,16 +11,20 @@ import EventKitUI
 import OrderedCollections
 import UIKit
 
-struct FetchEventType: OptionSet {
+public struct FetchEventType: OptionSet {
 
-    let rawValue: Int
+    public let rawValue: Int
+    
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
 
     static let timed = FetchEventType(rawValue: 1)
     static let allDay = FetchEventType(rawValue: 2)
     static let `any`: FetchEventType = [.timed, .allDay]
 }
 
-protocol DayPlanEKViewControllerDelegate: AnyObject {
+public protocol DayPlanEKViewControllerDelegate: AnyObject {
 
     func dayPlannerEKEViewController(
         _ controller: DayPlanEKViewController,
@@ -33,7 +37,7 @@ protocol DayPlanEKViewControllerDelegate: AnyObject {
     ) -> UINavigationController
 }
 
-class DayPlanEKViewController: DayPlanViewController {
+open class DayPlanEKViewController: DayPlanViewController {
 
     var calendar: Calendar = .current {
         didSet {
@@ -74,7 +78,7 @@ class DayPlanEKViewController: DayPlanViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -92,7 +96,7 @@ class DayPlanEKViewController: DayPlanViewController {
         dayPlanView.reloadAllEvents()
     }
 
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
 
         NotificationCenter.default.addObserver(
@@ -154,7 +158,9 @@ class DayPlanEKViewController: DayPlanViewController {
     private func loadEvents(at date: Date) -> Bool {
         let dayStart = calendar.startOfDay(for: date)
 
-        guard !eventsCache.objectExists(forKey: dayStart) else { return false }
+        let nonExist = try? !eventsCache.existsObject(forKey: dayStart)
+        
+        guard let nonExist, nonExist else { return false }
 
         dayPlanView.setActivityIndicator(visible: true, for: dayStart)
 
