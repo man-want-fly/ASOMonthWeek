@@ -10,16 +10,16 @@ import UIKit
 
 public class DateRange: NSObject, NSCopying {
 
-    var start: Date
-    var end: Date
+    public var start: Date
+    public var end: Date
 
-    var isEmpty: Bool { start == end }
+    public var isEmpty: Bool { start == end }
 
-    class func dateRange(start: Date, end: Date) -> DateRange {
+    public class func dateRange(start: Date, end: Date) -> DateRange {
         .init(start: start, end: end)
     }
 
-    init(start: Date, end: Date) {
+    public init(start: Date, end: Date) {
         self.start = start
         self.end = end
 
@@ -28,21 +28,21 @@ public class DateRange: NSObject, NSCopying {
         checkIfValid()
     }
 
-    func isEqual(to dateRange: DateRange) -> Bool {
+    public func isEqual(to dateRange: DateRange) -> Bool {
         dateRange.start == start && dateRange.end == end
     }
 
-    func components(unitFlags: Set<Calendar.Component>, for calendar: Calendar) -> DateComponents {
+    public func components(unitFlags: Set<Calendar.Component>, for calendar: Calendar) -> DateComponents {
         checkIfValid()
         return calendar.dateComponents(unitFlags, from: start, to: end)
     }
 
-    func contains(_ date: Date) -> Bool {
+    public func contains(_ date: Date) -> Bool {
         checkIfValid()
         return (start...end).contains(date)
     }
 
-    func intersect(_ dateRange: DateRange) {
+    public func intersect(_ dateRange: DateRange) {
         checkIfValid()
 
         // Check for no intersection
@@ -62,15 +62,15 @@ public class DateRange: NSObject, NSCopying {
         }
     }
 
-    func intersects(_ dateRange: DateRange) -> Bool {
+    public func intersects(_ dateRange: DateRange) -> Bool {
         (start...end).overlaps(dateRange.start...dateRange.end)
     }
 
-    func includes(_ dateRange: DateRange) -> Bool {
+    public func includes(_ dateRange: DateRange) -> Bool {
         start <= dateRange.start && end >= dateRange.end
     }
 
-    func union(_ dateRange: DateRange) {
+    public func union(_ dateRange: DateRange) {
         checkIfValid()
         dateRange.checkIfValid()
 
@@ -78,7 +78,7 @@ public class DateRange: NSObject, NSCopying {
         end = max(end, dateRange.end)
     }
 
-    func enumerateDays(with calendar: Calendar, using block: (Date, inout Bool) -> Void) {
+    public func enumerateDays(with calendar: Calendar, using block: (Date, inout Bool) -> Void) {
         var comp = DateComponents()
         comp.day = 1
 

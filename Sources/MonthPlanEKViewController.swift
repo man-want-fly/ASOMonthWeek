@@ -13,7 +13,7 @@ import UIKit
 
 open class MonthPlanEKViewController: MonthPlanViewController {
 
-    var calendar: Calendar = .current {
+    public var calendar: Calendar = .current {
         didSet {
             dateFormatter.calendar = calendar
             monthPlanView.calendar = calendar
@@ -46,7 +46,7 @@ open class MonthPlanEKViewController: MonthPlanViewController {
 
     let eventStore: EKEventStore
 
-    init(eventStore: EKEventStore) {
+    public init(eventStore: EKEventStore) {
         self.eventStore = eventStore
         self.eventKitSupport = .init(eventStore: eventStore)
         super.init(nibName: nil, bundle: nil)

@@ -7,17 +7,19 @@
 
 import UIKit
 
-let circleMarkAttributeName = "CircleMarkAttributeName"
+public let circleMarkAttributeName = "CircleMarkAttributeName"
 
-class CircleMark {
+public class CircleMark {
 
-    var borderColor: UIColor = .clear  // default is clear
-    var color: UIColor = .red  // default is red
-    var margin: CGFloat = 0  // padding on each side of the text
-    var yOffset: CGFloat = 0  // vertical position adjustment
+    public var borderColor: UIColor = .clear  // default is clear
+    public var color: UIColor = .red  // default is red
+    public var margin: CGFloat = 0  // padding on each side of the text
+    public var yOffset: CGFloat = 0  // vertical position adjustment
+    
+    public init() {}
 }
 
-extension NSAttributedString {
+public extension NSAttributedString {
 
     func image(withCircleMark mark: CircleMark) -> UIImage? {
         let maxSize = CGSize(
@@ -68,7 +70,7 @@ extension NSAttributedString {
 
 extension NSMutableAttributedString {
 
-    func processCircleMarks(inRange range: NSRange) {
+    public func processCircleMarks(inRange range: NSRange) {
         enumerateAttribute(
             NSAttributedString.Key(rawValue: circleMarkAttributeName),
             in: range,

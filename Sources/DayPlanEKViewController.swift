@@ -39,7 +39,7 @@ public protocol DayPlanEKViewControllerDelegate: AnyObject {
 
 open class DayPlanEKViewController: DayPlanViewController {
 
-    var calendar: Calendar = .current {
+    public var calendar: Calendar = .current {
         didSet {
             dayPlanView.calendar = calendar
         }
@@ -72,7 +72,7 @@ open class DayPlanEKViewController: DayPlanViewController {
 
     weak var delegate: DayPlanEKViewControllerDelegate?
 
-    init(eventStore: EKEventStore) {
+    public init(eventStore: EKEventStore) {
         self.eventStore = eventStore
         self.eventKitSupport = .init(eventStore: eventStore)
         super.init(nibName: nil, bundle: nil)
@@ -251,7 +251,7 @@ open class DayPlanEKViewController: DayPlanViewController {
     }
 
     // MARK: - DayPlanViewDataSource
-    override func dayPlanView(
+    open override func dayPlanView(
         _ dayPlanView: DayPlanView,
         numberOfEventsOfType eventType: EventType,
         at date: Date
@@ -264,7 +264,7 @@ open class DayPlanEKViewController: DayPlanViewController {
         .count
     }
 
-    override func dayPlanView(
+    open override func dayPlanView(
         _ dayPlanView: DayPlanView,
         viewForEventOfType eventType: EventType,
         at index: Int,
@@ -288,7 +288,7 @@ open class DayPlanEKViewController: DayPlanViewController {
         return cell
     }
 
-    override func dayPlanView(
+    open override func dayPlanView(
         _ dayPlanView: DayPlanView,
         dateRangeForEventOfType eventType: EventType,
         at index: Int,
@@ -310,7 +310,7 @@ open class DayPlanEKViewController: DayPlanViewController {
         return DateRange(start: event.startDate, end: end!)
     }
 
-    override func dayPlanView(
+    open override func dayPlanView(
         _ dayPlanView: DayPlanView,
         shouldStartMovingEventOfType eventType: EventType,
         at index: Int,
@@ -327,7 +327,7 @@ open class DayPlanEKViewController: DayPlanViewController {
         return event.calendar.allowsContentModifications
     }
 
-    override func dayPlanView(
+    open override func dayPlanView(
         _ dayPlanView: DayPlanView,
         canMoveEventOfType eventType: EventType,
         at index: Int,
@@ -346,7 +346,7 @@ open class DayPlanEKViewController: DayPlanViewController {
         return event.calendar.allowsContentModifications
     }
 
-    override func dayPlanView(
+    open override func dayPlanView(
         _ dayPlanView: DayPlanView,
         moveEventOfType eventType: EventType,
         at index: Int,
@@ -388,7 +388,7 @@ open class DayPlanEKViewController: DayPlanViewController {
         }
     }
 
-    override func dayPlanView(
+    open override func dayPlanView(
         _ dayPlanView: DayPlanView,
         viewForNewEventOfType eventType: EventType,
         at date: Date
@@ -402,7 +402,7 @@ open class DayPlanEKViewController: DayPlanViewController {
     }
 
     // MARK: - DayPlanViewDelegate
-    override func dayPlanView(
+    open override func dayPlanView(
         _ dayPlanView: DayPlanView,
         willDisplay date: Date
     ) {
@@ -412,7 +412,7 @@ open class DayPlanEKViewController: DayPlanViewController {
         }
     }
 
-    override func dayPlanView(
+    open override func dayPlanView(
         _ dayPlanView: DayPlanView,
         didEndDisplaying date: Date
     ) {

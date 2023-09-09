@@ -7,22 +7,22 @@
 
 import UIKit
 
-enum DayPlanTimeMark: Int {
+public enum DayPlanTimeMark: Int {
     case header = 0
     case current, floating
 }
 
-enum DayPlanScrollType: Int {
+public enum DayPlanScrollType: Int {
     case dateTime = 0
     case date, time
 }
 
-enum DayPlanCoveringType: Int {
+public enum DayPlanCoveringType: Int {
     case classic = 0, complex
 }
 
 // MARK: - DayPlanViewDataSource
-protocol DayPlanViewDataSource: AnyObject {
+public protocol DayPlanViewDataSource: AnyObject {
 
     func dayPlanView(
         _ dayPlanView: DayPlanView,
@@ -89,7 +89,7 @@ protocol DayPlanViewDataSource: AnyObject {
 }
 
 // MARK: - DayPlanViewDelegate
-protocol DayPlanViewDelegate: AnyObject {
+public protocol DayPlanViewDelegate: AnyObject {
 
     func dayPlanView(
         _ dayPlanView: DayPlanView,

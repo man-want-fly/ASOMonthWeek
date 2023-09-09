@@ -22,7 +22,7 @@ struct ScrollDirection: OptionSet {
     static let vertical: ScrollDirection = [.up, .down]
 }
 
-class DayPlanView: UIView {
+public class DayPlanView: UIView {
     
     private let daysLoadingStep = 2
     private let minHourSlotHeight: CGFloat = 20
@@ -114,7 +114,7 @@ class DayPlanView: UIView {
 
     var timeColumnWidth: CGFloat = 60
 
-    var dayHeaderHeight: CGFloat = 72 {
+    public var dayHeaderHeight: CGFloat = 72 {
         didSet {
             guard dayHeaderHeight != oldValue else { return }
             setupSubviews()
@@ -141,12 +141,12 @@ class DayPlanView: UIView {
         }
     }
 
-    var backgroundView: UIView?
+    public var backgroundView: UIView?
 
-    var dateFormat: String = "d MMM\neeeee"
+    public var dateFormat: String = "d MMM\neeeee"
 
     private var _dateRange: DateRange?
-    var dateRange: DateRange? {
+    public var dateRange: DateRange? {
         set {
             if dateRange != newValue {
                 var firstDate = visibleDays.start
@@ -1174,7 +1174,7 @@ class DayPlanView: UIView {
         allDayEventsView.flashScrollIndicators()
     }
 
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
 
         let dayColumnSize = dayColumnSize
@@ -1222,7 +1222,7 @@ class DayPlanView: UIView {
         previousVisibleDays = newRange
     }
 
-    func scroll(to date: Date, options: DayPlanScrollType, animated: Bool) {
+    public func scroll(to date: Date, options: DayPlanScrollType, animated: Bool) {
         guard controllingScrollView == nil else { return }
 
         var firstVisible = date
@@ -1886,7 +1886,7 @@ class DayPlanView: UIView {
             )
     }
 
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard scrollView == controllingScrollView else { return }
 
         lockScrollingDirection()
@@ -1907,11 +1907,11 @@ class DayPlanView: UIView {
             )
     }
 
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.scrollView(scrollView, willStartScrollingOnDirection: .unknown)
     }
 
-    func scrollViewWillEndDragging(
+    public func scrollViewWillEndDragging(
         _ scrollView: UIScrollView,
         withVelocity velocity: CGPoint,
         targetContentOffset: UnsafeMutablePointer<CGPoint>
@@ -1949,7 +1949,7 @@ class DayPlanView: UIView {
         targetContentOffset.pointee.x = xOffset
     }
 
-    func scrollViewDidEndDragging(
+    public func scrollViewDidEndDragging(
         _ scrollView: UIScrollView,
         willDecelerate decelerate: Bool
     ) {
@@ -1962,12 +1962,12 @@ class DayPlanView: UIView {
         }
     }
 
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         scrollViewDidEndScrolling(scrollView)
         UIDevice.current.endGeneratingDeviceOrientationNotifications()
     }
 
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         scrollViewDidEndScrolling(scrollView)
         UIDevice.current.endGeneratingDeviceOrientationNotifications()
     }
@@ -2096,7 +2096,7 @@ class DayPlanView: UIView {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension DayPlanView: UICollectionViewDelegateFlowLayout {
 
-    func collectionView(
+    public func collectionView(
         _ collectionView: UICollectionView,
         targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint
     ) -> CGPoint {
@@ -2108,7 +2108,7 @@ extension DayPlanView: UICollectionViewDelegateFlowLayout {
         return proposedContentOffset
     }
 
-    func collectionView(
+    public func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
@@ -2120,11 +2120,11 @@ extension DayPlanView: UICollectionViewDelegateFlowLayout {
 // MARK: - UICollectionViewDataSource
 extension DayPlanView: UICollectionViewDataSource {
 
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
         numberOfLoadedDays
     }
 
-    func collectionView(
+    public func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
@@ -2152,7 +2152,7 @@ extension DayPlanView: UICollectionViewDataSource {
         return 1  // for dayColumnView
     }
 
-    func collectionView(
+    public func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
@@ -2168,7 +2168,7 @@ extension DayPlanView: UICollectionViewDataSource {
         fatalError("no cell")
     }
 
-    func collectionView(
+    public func collectionView(
         _ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath

@@ -9,7 +9,7 @@ import UIKit
 
 open class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPlanViewDelegate {
 
-    var dayPlanView: DayPlanView {
+    public var dayPlanView: DayPlanView {
         set {
             super.view = newValue
             newValue.dataSource = self
@@ -81,7 +81,7 @@ open class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPl
     }
 
     // MARK: - DayPlanViewDataSource
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         numberOfEventsOfType eventType: EventType,
         at date: Date
@@ -89,7 +89,7 @@ open class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPl
         0
     }
 
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         viewForEventOfType eventType: EventType,
         at index: Int,
@@ -98,7 +98,7 @@ open class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPl
         nil
     }
 
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         dateRangeForEventOfType eventType: EventType,
         at index: Int,
@@ -107,7 +107,7 @@ open class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPl
         nil
     }
 
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         shouldStartMovingEventOfType eventType: EventType,
         at index: Int,
@@ -116,7 +116,7 @@ open class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPl
         false
     }
 
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         canMoveEventOfType eventType: EventType,
         at index: Int,
@@ -127,7 +127,7 @@ open class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPl
         false
     }
 
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         moveEventOfType eventType: EventType,
         at index: Int,
@@ -136,7 +136,7 @@ open class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPl
         toDate targetDate: Date
     ) {}
 
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         viewForNewEventOfType eventType: EventType,
         at date: Date
@@ -144,7 +144,7 @@ open class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPl
         nil
     }
 
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         canCreateNewEventOfType eventType: EventType,
         at date: Date
@@ -152,14 +152,14 @@ open class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPl
         true
     }
 
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         createNewEventOfType eventType: EventType,
         at date: Date
     ) {}
 
     // MARK: - DayPlanViewDelegate
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         attributedStringForTimeMark timeMark: DayPlanTimeMark,
         time: TimeInterval
@@ -167,21 +167,21 @@ open class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPl
         nil
     }
 
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         attributedStringForDayHeaderAt date: Date
     ) -> NSAttributedString? {
         nil
     }
 
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         numberOfDimmedTimeRangesAt date: Date
     ) -> Int {
         0
     }
 
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         dimmedTimeRangeAt index: Int,
         date: Date
@@ -189,33 +189,33 @@ open class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPl
         nil
     }
 
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         didScroll scrollType: DayPlanScrollType
     ) {}
 
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         didEndScrolling scrollType: DayPlanScrollType
     ) {
         headerView?.select(date: dayPlanView.visibleDays.start)
     }
 
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         willDisplay date: Date
     ) {}
 
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         didEndDisplaying date: Date
     ) {}
 
-    func dayPlanViewDidZoom(
+    open func dayPlanViewDidZoom(
         _ dayPlanView: DayPlanView
     ) {}
 
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         shouldSelectEventOfType eventType: EventType,
         at index: Int,
@@ -224,7 +224,7 @@ open class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPl
         false
     }
 
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         didSelectEventOfType eventType: EventType,
         at index: Int,
@@ -233,7 +233,7 @@ open class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPl
         false
     }
 
-    func dayPlanView(
+    open func dayPlanView(
         _ dayPlanView: DayPlanView,
         didDeselectEventOfType eventType: EventType,
         at index: Int,
