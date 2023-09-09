@@ -622,7 +622,13 @@ public class MonthPlanView: UIView {
         // if the first subview of the controller's view is a scrollview,
         // its insets may be adjusted to account for screen areas consumed by navigation bar...
 
-        eventsView.frame = bounds
+        let insets: UIEdgeInsets =
+            traitCollection.isPortrait
+            ? .zero
+            : .init(top: 0, left: safeAreaInsets.left, bottom: 0, right: safeAreaInsets.right)
+
+        eventsView.frame = bounds.inset(by: insets)
+
         if eventsView.superview == nil {
             addSubview(eventsView)
         }
@@ -1297,7 +1303,7 @@ extension MonthPlanView: UICollectionViewDataSource {
             ) as? MonthPlanMonthHeaderView
         else { return .init(frame: .zero) }
 
-        let dateFormatter = DateFormatter() // TODO: DateFormatter
+        let dateFormatter = DateFormatter()  // TODO: DateFormatter
         dateFormatter.calendar = calendar
         view.weekStrings = dateFormatter.shortStandaloneWeekdaySymbols
 
@@ -1596,47 +1602,47 @@ extension MonthPlanView: MonthPlannerViewLayoutDelegate {
         delegate?.monthPlanViewDidScroll(self)
     }
 
-//    func scrollViewWillEndDragging(
-//        _ scrollView: UIScrollView,
-//        withVelocity velocity: CGPoint,
-//        targetContentOffset: UnsafeMutablePointer<CGPoint>
-//    ) {
-//        let kFlickVelocity: CGFloat = 0.2
-//
-//        var xOffsetMin: CGFloat = 0  //pagingMode == .headerTop ? 0 : monthInsets.top
-//        var xOffsetMax: CGFloat = monthMaximumWidth
-//
-//        var monthStart = startDate
-//        for _ in 0..<numberOfLoadedMonths {
-//            let offset = xOffsetMin + widthForMonth(at: monthStart)
-//            if offset > scrollView.contentOffset.x {
-//                xOffsetMax = offset
-//                break
-//            }
-//            xOffsetMin = offset
-//
-//            monthStart = Calendar.current.date(byAdding: .month, value: 1, to: monthStart)!
-//        }
-//
-//        // we need to had a few checks to avoid flickering when swiping fast on a small distance
-//        // see http://stackoverflow.com/a/14291208/740949
-//        let deltaX = targetContentOffset.pointee.x - scrollView.contentOffset.x
-//        let mightFlicker = (velocity.x > 0.0 && deltaX > 0.0) || (velocity.x < 0.0 && deltaX < 0.0)
-//
-//        if abs(velocity.x) < kFlickVelocity && !mightFlicker {
-//            // stick to nearest section
-//            if scrollView.contentOffset.x - xOffsetMin < xOffsetMax - scrollView.contentOffset.x {
-//                targetContentOffset.pointee.x = xOffsetMin
-//            } else {
-//                targetContentOffset.pointee.x = xOffsetMax
-//            }
-//        } else {
-//            // scroll to next page
-//            if velocity.x > 0 {
-//                targetContentOffset.pointee.x = xOffsetMax
-//            } else {
-//                targetContentOffset.pointee.x = xOffsetMin
-//            }
-//        }
-//    }
+    //    func scrollViewWillEndDragging(
+    //        _ scrollView: UIScrollView,
+    //        withVelocity velocity: CGPoint,
+    //        targetContentOffset: UnsafeMutablePointer<CGPoint>
+    //    ) {
+    //        let kFlickVelocity: CGFloat = 0.2
+    //
+    //        var xOffsetMin: CGFloat = 0  //pagingMode == .headerTop ? 0 : monthInsets.top
+    //        var xOffsetMax: CGFloat = monthMaximumWidth
+    //
+    //        var monthStart = startDate
+    //        for _ in 0..<numberOfLoadedMonths {
+    //            let offset = xOffsetMin + widthForMonth(at: monthStart)
+    //            if offset > scrollView.contentOffset.x {
+    //                xOffsetMax = offset
+    //                break
+    //            }
+    //            xOffsetMin = offset
+    //
+    //            monthStart = Calendar.current.date(byAdding: .month, value: 1, to: monthStart)!
+    //        }
+    //
+    //        // we need to had a few checks to avoid flickering when swiping fast on a small distance
+    //        // see http://stackoverflow.com/a/14291208/740949
+    //        let deltaX = targetContentOffset.pointee.x - scrollView.contentOffset.x
+    //        let mightFlicker = (velocity.x > 0.0 && deltaX > 0.0) || (velocity.x < 0.0 && deltaX < 0.0)
+    //
+    //        if abs(velocity.x) < kFlickVelocity && !mightFlicker {
+    //            // stick to nearest section
+    //            if scrollView.contentOffset.x - xOffsetMin < xOffsetMax - scrollView.contentOffset.x {
+    //                targetContentOffset.pointee.x = xOffsetMin
+    //            } else {
+    //                targetContentOffset.pointee.x = xOffsetMax
+    //            }
+    //        } else {
+    //            // scroll to next page
+    //            if velocity.x > 0 {
+    //                targetContentOffset.pointee.x = xOffsetMax
+    //            } else {
+    //                targetContentOffset.pointee.x = xOffsetMin
+    //            }
+    //        }
+    //    }
 }

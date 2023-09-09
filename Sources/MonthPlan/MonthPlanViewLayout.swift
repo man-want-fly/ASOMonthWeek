@@ -34,7 +34,7 @@ public class MonthPlanViewLayout: UICollectionViewFlowLayout {
     private var layoutInfo: [ElementKind: [IndexPath: UICollectionViewLayoutAttributes]] = [:]
 
     private var contentWidth: CGFloat = 0
-    private let monthHeaderHeight: CGFloat = 64
+    private let monthHeaderHeight: CGFloat = 56
 
     private var weekHeight: CGFloat {
         rowHeight - dayHeaderHeight
