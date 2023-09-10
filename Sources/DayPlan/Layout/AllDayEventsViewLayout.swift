@@ -261,18 +261,6 @@ class AllDayEventsViewLayout: UICollectionViewLayout {
         return attr
     }
 
-    override func initialLayoutAttributesForAppearingItem(
-        at itemIndexPath: IndexPath
-    ) -> UICollectionViewLayoutAttributes? {
-        super.initialLayoutAttributesForAppearingItem(at: itemIndexPath)
-    }
-
-    override func finalLayoutAttributesForDisappearingItem(
-        at itemIndexPath: IndexPath
-    ) -> UICollectionViewLayoutAttributes? {
-        super.finalLayoutAttributesForDisappearingItem(at: itemIndexPath)
-    }
-
     override func layoutAttributesForSupplementaryView(
         ofKind elementKind: String,
         at indexPath: IndexPath
@@ -290,7 +278,9 @@ class AllDayEventsViewLayout: UICollectionViewLayout {
     override func shouldInvalidateLayout(
         forBoundsChange newBounds: CGRect
     ) -> Bool {
-        let oldBounds = collectionView?.bounds ?? .zero
+        guard let collectionView else { return false }
+        
+        let oldBounds = collectionView.bounds
 
         var shouldInvalidate = oldBounds.width != newBounds.width
 

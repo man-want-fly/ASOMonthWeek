@@ -23,7 +23,7 @@ struct ScrollDirection: OptionSet {
 }
 
 public class DayPlanView: UIView {
-    
+
     private let daysLoadingStep = 2
     private let minHourSlotHeight: CGFloat = 20
     private let maxHourSlotHeight: CGFloat = 150
@@ -519,7 +519,7 @@ public class DayPlanView: UIView {
     private func setup() {
         autoresizesSubviews = false
         showsAllDayEvents = true
-        
+
         allDayEventsBackgroundView.timeColumnWidth = timeColumnWidth
 
         NotificationCenter.default.addObserver(
@@ -1100,14 +1100,14 @@ public class DayPlanView: UIView {
             addSubview(allDayEventsBackgroundView)
         }
 
-            UIView.animate(withDuration: 0.3, delay: 0, options: .layoutSubviews) {
-                self.allDayEventsView.frame = .init(
-                    x: self.timeColumnWidth,
-                    y: self.dayHeaderHeight,
-                    width: timedEventsViewWidth,
-                    height: allDayEventsViewHeight
-                )
-            }
+        UIView.animate(withDuration: 0.3, delay: 0, options: .layoutSubviews) {
+            self.allDayEventsView.frame = .init(
+                x: self.timeColumnWidth,
+                y: self.dayHeaderHeight,
+                width: timedEventsViewWidth,
+                height: allDayEventsViewHeight
+            )
+        }
 
         if allDayEventsView.superview == nil {
             addSubview(allDayEventsView)
@@ -1190,6 +1190,15 @@ public class DayPlanView: UIView {
 
         setupSubviews()
         updateVisibleDaysRange()
+    }
+
+    public override func traitCollectionDidChange(
+        _ previousTraitCollection: UITraitCollection?
+    ) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        guard traitCollection != previousTraitCollection else { return }
+        allDayEventsView.collectionViewLayout.invalidateLayout()
     }
 
     private func updateVisibleDaysRange() {
@@ -1565,7 +1574,7 @@ public class DayPlanView: UIView {
         let section = dayOffset(from: date)
         let path = IndexPath(item: 0, section: section)
         if let cell = dayColumnsView.cellForItem(at: path) as? DayColumnCell {
-//            cell.activityIndicator(visible: visible)
+            //            cell.activityIndicator(visible: visible)
             return true
         }
         return false
