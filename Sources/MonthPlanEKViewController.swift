@@ -79,7 +79,7 @@ open class MonthPlanEKViewController: MonthPlanViewController {
 
         monthPlanView.calendar = calendar
         monthPlanView.register(
-            cellClass: StandardEventView.self,
+            cellClass: MonthStandardEventView.self,
             forEventCellWithReuseIdentifier: ReusableConstants.Identifier.eventCell
         )
     }
@@ -274,28 +274,20 @@ open class MonthPlanEKViewController: MonthPlanViewController {
         date: Date
     ) -> EventView {
         guard
-            let evCell =
+            let cell =
                 monthPlanView.dequeueReusableCell(
                     withReuseIdentifier: ReusableConstants.Identifier.eventCell,
                     forEventAt: index,
                     date: date
-                ) as? StandardEventView
+                ) as? MonthStandardEventView
         else { return .init() }
 
-        let ev = event(at: index, date: date)
+        let event = event(at: index, date: date)
 
-        evCell.title = ev.title
-        evCell.subtitle = ev.location
-        evCell.detail = dateFormatter.string(from: ev.startDate)
-        evCell.color = UIColor(cgColor: ev.calendar.cgColor)
+        cell.title = event.title
+        cell.color = UIColor(cgColor: event.calendar.cgColor)
 
-        let start = calendar.startOfDay(for: ev.startDate)
-        let end = calendar.nextStartOfDay(for: ev.endDate)
-        let range = DateRange(start: start, end: end)
-
-        let numDays = range.components(unitFlags: [.day], for: calendar).day!
-
-        return evCell
+        return cell
     }
 
     public override func monthPlanView(
