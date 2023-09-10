@@ -28,9 +28,9 @@ public class DayPlanView: UIView {
     private let minHourSlotHeight: CGFloat = 20
     private let maxHourSlotHeight: CGFloat = 150
 
-    var calendar: Calendar = .current
+    public var calendar: Calendar = .current
 
-    var numberOfVisibleDays = 7 {
+    public var numberOfVisibleDays = 7 {
         didSet {
             assert(
                 numberOfVisibleDays > 0,
