@@ -1064,7 +1064,7 @@ public class DayPlanView: UIView {
     }
 
     private func setupSubviews() {
-        var allDayEventsViewHeight: CGFloat = 1
+        var allDayEventsViewHeight: CGFloat = 0.5
 
         if showsAllDayEvents {
             allDayEventsViewHeight = fmax(

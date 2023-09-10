@@ -124,12 +124,13 @@ class DayColumnCell: UICollectionViewCell, Reusable {
 
         leftBorder.frame = borderFrame
         leftBorder.borderColor = separatorColor.cgColor
-        leftBorder.borderWidth = borderFrame.size.width / 2.0
+        leftBorder.borderWidth = borderFrame.width / 2.0
 
         CATransaction.commit()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
         
         if traitCollection != previousTraitCollection {
             headerHeight = traitCollection.isPortrait ? 56 : 32

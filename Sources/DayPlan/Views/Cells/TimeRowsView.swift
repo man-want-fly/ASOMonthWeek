@@ -133,8 +133,8 @@ class TimeRowsView: UIView {
             attributedString = .init(
                 string: str,
                 attributes: [
-                    NSAttributedString.Key.font: font,
-                    NSAttributedString.Key.foregroundColor: color,
+                    .font: font,
+                    .foregroundColor: color,
                 ]
             )
         }
