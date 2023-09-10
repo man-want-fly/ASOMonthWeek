@@ -116,7 +116,7 @@ open class DayPlanEKViewController: DayPlanViewController {
 
         dayPlanView.calendar = calendar
         dayPlanView.register(
-            StandardEventView.self,
+            WeekAllDayEventView.self,
             forEventViewWithReuseIdentifier: ReusableConstants.Identifier.eventCell
         )
     }
@@ -277,12 +277,10 @@ open class DayPlanEKViewController: DayPlanViewController {
                 ReusableConstants.Identifier.eventCell,
                 at: index,
                 date: date
-            ) as? StandardEventView
+            ) as? WeekAllDayEventView
         else { return nil }
 
-        cell.font = UIFont.systemFont(ofSize: 11)
         cell.title = event.title
-        cell.subtitle = event.location
         cell.color = UIColor(cgColor: event.calendar.cgColor)
         
         return cell
