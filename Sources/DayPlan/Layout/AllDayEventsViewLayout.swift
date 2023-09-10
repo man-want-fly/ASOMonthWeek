@@ -7,16 +7,20 @@
 
 import UIKit
 
-struct AllDayEventInset: OptionSet {
+public struct AllDayEventInset: OptionSet {
 
-    let rawValue: Int
+    public let rawValue: Int
+    
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
 
-    static let none: AllDayEventInset = []
-    static let left = AllDayEventInset(rawValue: 1 << 0)
-    static let right = AllDayEventInset(rawValue: 1 << 1)
+    public static let none: AllDayEventInset = []
+    public static let left = AllDayEventInset(rawValue: 1 << 0)
+    public static let right = AllDayEventInset(rawValue: 1 << 1)
 }
 
-protocol AllDayEventViewLayoutDelegate: AnyObject {
+public protocol AllDayEventViewLayoutDelegate: AnyObject {
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -31,16 +35,17 @@ protocol AllDayEventViewLayoutDelegate: AnyObject {
     ) -> AllDayEventInset
 }
 
-private let cellSpacing: CGFloat = 2  // space around cells
-private let cellInset: CGFloat = 4
-
-class AllDayEventsViewLayout: UICollectionViewLayout {
+public class AllDayEventsViewLayout: UICollectionViewLayout {
+    
+    private let cellSpacing: CGFloat = 1  // space around cells
+    private let cellInset: CGFloat = 4
 
     weak var delegate: AllDayEventViewLayoutDelegate?
 
     var dayColumnWidth: CGFloat = 60
     var eventCellHeight: CGFloat = 20
-    var maxContentHeight: CGFloat = 1000//.greatestFiniteMagnitude
+    var maxContentHeight: CGFloat = 10000 //.greatestFiniteMagnitude
+    
     private var visibleSections: NSRange = .init(location: 0, length: 0)
 
     private var maxEventsInSections: Int = 0
@@ -155,7 +160,7 @@ class AllDayEventsViewLayout: UICollectionViewLayout {
         return .init(location: first, length: last - first)
     }
 
-    override func prepare() {
+    public override func prepare() {
 
         guard let collectionView else { return }
 
@@ -222,7 +227,7 @@ class AllDayEventsViewLayout: UICollectionViewLayout {
         layoutInfos["moreInfos"] = moreInfos
     }
 
-    override var collectionViewContentSize: CGSize {
+    public override var collectionViewContentSize: CGSize {
         guard let collectionView else { return .zero }
         return .init(
             width: CGFloat(collectionView.numberOfSections) * dayColumnWidth,
@@ -230,7 +235,7 @@ class AllDayEventsViewLayout: UICollectionViewLayout {
         )
     }
 
-    override func layoutAttributesForElements(
+    public override func layoutAttributesForElements(
         in rect: CGRect
     ) -> [UICollectionViewLayoutAttributes]? {
 
@@ -245,7 +250,7 @@ class AllDayEventsViewLayout: UICollectionViewLayout {
         return attrs
     }
 
-    override func layoutAttributesForItem(
+    public override func layoutAttributesForItem(
         at indexPath: IndexPath
     ) -> UICollectionViewLayoutAttributes? {
 
@@ -261,7 +266,7 @@ class AllDayEventsViewLayout: UICollectionViewLayout {
         return attr
     }
 
-    override func layoutAttributesForSupplementaryView(
+    public override func layoutAttributesForSupplementaryView(
         ofKind elementKind: String,
         at indexPath: IndexPath
     ) -> UICollectionViewLayoutAttributes? {
@@ -275,7 +280,7 @@ class AllDayEventsViewLayout: UICollectionViewLayout {
         return attr
     }
 
-    override func shouldInvalidateLayout(
+    public override func shouldInvalidateLayout(
         forBoundsChange newBounds: CGRect
     ) -> Bool {
         guard let collectionView else { return false }

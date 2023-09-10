@@ -57,7 +57,7 @@ class WeekAllDayEventView: EventView {
         titleLabel.frame = .init(
             x: 4,
             y: (bounds.height - h) * 0.5,
-            width: bounds.width - 8,
+            width: bounds.width - 6,
             height: h
         )
     }

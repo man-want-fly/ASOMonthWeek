@@ -1071,7 +1071,7 @@ public class DayPlanView: UIView {
                 allDayEventsViewHeight,
                 fmin(
                     allDayEventsView.contentSize.height,
-                    allDayEventCellHeight * 2.5 + 6
+                    allDayEventCellHeight * 4 + 4
                 )
             )
         }
@@ -2381,7 +2381,7 @@ extension DayPlanView: TimedEventsViewLayoutDelegate {
 // MARK: - AllDayEventViewLayoutDelegate
 extension DayPlanView: AllDayEventViewLayoutDelegate {
 
-    func collectionView(
+    public func collectionView(
         _ collectionView: UICollectionView,
         layout: AllDayEventsViewLayout,
         dayRangeForEventAt indexPath: IndexPath
@@ -2421,7 +2421,7 @@ extension DayPlanView: AllDayEventViewLayoutDelegate {
         return NSRange(location: startSection, length: length)
     }
 
-    func collectionView(
+    public func collectionView(
         _ collectionView: UICollectionView,
         layout: AllDayEventsViewLayout,
         insetsForEventAt indexPath: IndexPath
