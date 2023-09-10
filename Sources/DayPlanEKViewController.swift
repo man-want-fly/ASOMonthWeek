@@ -430,7 +430,12 @@ open class DayPlanEKViewController: DayPlanViewController {
     ) -> Bool {
         guard let event = event(ofType: eventType, at: index, date: date) else { return false }
         print("didSelectEventOfType event: \(event)")
+        didSelect(event: event)
         return true
+    }
+    
+    open func didSelect(event: EKEvent) {
+        
     }
 
     // MARK: - DayPlanViewDelegate
