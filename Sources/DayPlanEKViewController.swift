@@ -14,7 +14,7 @@ import UIKit
 public struct FetchEventType: OptionSet {
 
     public let rawValue: Int
-    
+
     public init(rawValue: Int) {
         self.rawValue = rawValue
     }
@@ -163,7 +163,7 @@ open class DayPlanEKViewController: DayPlanViewController {
         let dayStart = calendar.startOfDay(for: date)
 
         let nonExist = try? !eventsCache.existsObject(forKey: dayStart)
-        
+
         guard let nonExist, nonExist else { return false }
 
         dayPlanView.setActivityIndicator(visible: true, for: dayStart)
@@ -288,7 +288,7 @@ open class DayPlanEKViewController: DayPlanViewController {
 
             cell.title = event.title
             cell.color = UIColor(cgColor: event.calendar.cgColor)
-            
+
             return cell
         case .timed:
             guard
@@ -303,10 +303,10 @@ open class DayPlanEKViewController: DayPlanViewController {
 
             cell.title = event.title
             cell.color = UIColor(cgColor: event.calendar.cgColor)
-            
+
             return cell
         }
-        
+
     }
 
     open override func dayPlanView(
@@ -420,6 +420,17 @@ open class DayPlanEKViewController: DayPlanViewController {
         view.title = "New Event"
         view.color = UIColor(cgColor: calendar!.cgColor)
         return view
+    }
+
+    open override func dayPlanView(
+        _ dayPlanView: DayPlanView,
+        didSelectEventOfType eventType: EventType,
+        at index: Int,
+        date: Date
+    ) -> Bool {
+        guard let event = event(ofType: eventType, at: index, date: date) else { return false }
+        print("didSelectEventOfType event: \(event)")
+        return true
     }
 
     // MARK: - DayPlanViewDelegate

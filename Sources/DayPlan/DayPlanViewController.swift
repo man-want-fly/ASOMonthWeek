@@ -221,7 +221,7 @@ open class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPl
         at index: Int,
         date: Date
     ) -> Bool {
-        false
+        true
     }
 
     open func dayPlanView(
@@ -230,7 +230,7 @@ open class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPl
         at index: Int,
         date: Date
     ) -> Bool {
-        false
+        true
     }
 
     open func dayPlanView(
