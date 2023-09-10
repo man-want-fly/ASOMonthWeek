@@ -117,7 +117,11 @@ open class DayPlanEKViewController: DayPlanViewController {
         dayPlanView.calendar = calendar
         dayPlanView.register(
             WeekAllDayEventView.self,
-            forEventViewWithReuseIdentifier: ReusableConstants.Identifier.eventCell
+            forEventViewWithReuseIdentifier: String(describing: WeekAllDayEventView.self)
+        )
+        dayPlanView.register(
+            StandardEventView.self,
+            forEventViewWithReuseIdentifier: String(describing: StandardEventView.self)
         )
     }
 
@@ -270,20 +274,39 @@ open class DayPlanEKViewController: DayPlanViewController {
         at index: Int,
         date: Date
     ) -> EventView? {
-        guard
-            let event = event(ofType: eventType, at: index, date: date),
-            let cell = dayPlanView.dequeueReusableView(
-                for: eventType,
-                ReusableConstants.Identifier.eventCell,
-                at: index,
-                date: date
-            ) as? WeekAllDayEventView
-        else { return nil }
+        switch eventType {
+        case .allDay:
+            guard
+                let event = event(ofType: eventType, at: index, date: date),
+                let cell = dayPlanView.dequeueReusableView(
+                    for: eventType,
+                    String(describing: WeekAllDayEventView.self),
+                    at: index,
+                    date: date
+                ) as? WeekAllDayEventView
+            else { return nil }
 
-        cell.title = event.title
-        cell.color = UIColor(cgColor: event.calendar.cgColor)
+            cell.title = event.title
+            cell.color = UIColor(cgColor: event.calendar.cgColor)
+            
+            return cell
+        case .timed:
+            guard
+                let event = event(ofType: eventType, at: index, date: date),
+                let cell = dayPlanView.dequeueReusableView(
+                    for: eventType,
+                    String(describing: StandardEventView.self),
+                    at: index,
+                    date: date
+                ) as? StandardEventView
+            else { return nil }
+
+            cell.title = event.title
+            cell.color = UIColor(cgColor: event.calendar.cgColor)
+            
+            return cell
+        }
         
-        return cell
     }
 
     open override func dayPlanView(

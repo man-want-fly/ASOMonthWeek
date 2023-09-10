@@ -80,7 +80,7 @@ open class MonthPlanEKViewController: MonthPlanViewController {
         monthPlanView.calendar = calendar
         monthPlanView.register(
             cellClass: MonthStandardEventView.self,
-            forEventCellWithReuseIdentifier: ReusableConstants.Identifier.eventCell
+            forEventCellWithReuseIdentifier: String(describing: MonthStandardEventView.self)
         )
     }
 
@@ -276,7 +276,7 @@ open class MonthPlanEKViewController: MonthPlanViewController {
         guard
             let cell =
                 monthPlanView.dequeueReusableCell(
-                    withReuseIdentifier: ReusableConstants.Identifier.eventCell,
+                    withReuseIdentifier: String(describing: MonthStandardEventView.self),
                     forEventAt: index,
                     date: date
                 ) as? MonthStandardEventView

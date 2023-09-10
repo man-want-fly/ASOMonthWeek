@@ -2,12 +2,12 @@
 //  WeekAllDayEventView.swift
 //  
 //
-//  Created by DB H on 2023/9/10.
+//  Created by mwf on 2023/9/10.
 //
 
 import UIKit
 
-class WeekAllDayEventView: EventView {
+public class WeekAllDayEventView: EventView {
 
     var title: String? {
         didSet {

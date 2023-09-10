@@ -24,9 +24,7 @@ extension ReusableConstants {
     enum Identifier {
         static let dimmingView = "DimmingViewReuseIdentifier"
         static let timeRowCell = "TimeRowCellReuseIdentifier"
-        static let moreEventsView = "MoreEventsViewReuseIdentifier"
-        static let eventCell = "EventCellReuseIdentifier"
-        
+        static let moreEventsView = "MoreEventsViewReuseIdentifier"        
         
         static let eventsRowView = "EventsRowViewIdentifier"
         static let dayCell = "DayCellIdentifier"
