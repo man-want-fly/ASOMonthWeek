@@ -24,11 +24,6 @@ struct MonthPlanGridStyle: OptionSet {
     static let `default`: MonthPlanGridStyle = [verticalLines, horizontalLines]
 }
 
-enum MonthPlanScrollAlignment: Int {
-    case headerTop = 0
-    case headerBottom, weekRow
-}
-
 enum CalendarViewScrollingDirection: Int {
     case up = 0
     case down
@@ -41,7 +36,7 @@ private let rowCacheSize = 40
 
 public class MonthPlanView: UIView {
 
-    var calendar: Calendar = .current
+    public var calendar: Calendar = .current
 
     var headerHeight: CGFloat = 35
 
@@ -81,7 +76,7 @@ public class MonthPlanView: UIView {
         }
     }
 
-    var dateFormat: String?  // use default
+    public var dateFormat: String?  // use default
     {
         set {
             dateFormatter.dateFormat = newValue ?? defaultDateFormat
@@ -92,26 +87,26 @@ public class MonthPlanView: UIView {
         }
     }
 
-    var itemHeight: CGFloat = 16
+    public var itemHeight: CGFloat = 16
 
-    var calendarBackgroundColor: UIColor = .systemBackground
+    public var calendarBackgroundColor: UIColor = .systemBackground
 
-    var weekDayBackgroundColor: UIColor = .systemGroupedBackground
+    public var weekDayBackgroundColor: UIColor = .systemGroupedBackground
 
-    var weekendDayBackgroundColor: UIColor = .tertiarySystemGroupedBackground
+    public var weekendDayBackgroundColor: UIColor = .tertiarySystemGroupedBackground
 
-    var monthLabelTextColor: UIColor = .label
+    public var monthLabelTextColor: UIColor = .label
 
-    var monthLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .headline)
+    public var monthLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .headline)
 
-    var canCreateEvents: Bool = true
+    public var canCreateEvents: Bool = true
 
-    var canMoveEvents: Bool = true
+    public var canMoveEvents: Bool = true
 
-    weak var dataSource: MonthPlanViewDataSource?
-    weak var delegate: MonthPlanViewDelegate?
+    public weak var dataSource: MonthPlanViewDataSource?
+    public weak var delegate: MonthPlanViewDelegate?
 
-    var dateRange: DateRange? {
+    public var dateRange: DateRange? {
         didSet {
             guard let dateRange, let visibleDays = visibleDays() else { return }
 
@@ -130,7 +125,7 @@ public class MonthPlanView: UIView {
             }
 
             eventsView.reloadData()
-            scrollTo(date: firstDate, alignment: .weekRow, animated: false)
+            scrollTo(date: firstDate, animated: false)
         }
     }
 
@@ -152,11 +147,7 @@ public class MonthPlanView: UIView {
         return cell
     }
 
-    func scrollTo(date: Date, animated: Bool) {
-        scrollTo(date: date, alignment: .weekRow, animated: animated)
-    }
-
-    func scrollTo(date: Date, alignment: MonthPlanScrollAlignment, animated: Bool) {
+    public func scrollTo(date: Date, animated: Bool) {
         // check if date in range
         if let dateRange, !dateRange.contains(date) {
             fatalError(

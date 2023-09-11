@@ -9,7 +9,7 @@ import UIKit
 
 open class MonthPlanViewController: UIViewController, MonthPlanViewDataSource, MonthPlanViewDelegate {
     
-    var monthPlanView: MonthPlanView = .init(frame: .zero) {
+    open var monthPlanView: MonthPlanView = .init(frame: .zero) {
         didSet {
             monthPlanView.dataSource = self
             monthPlanView.delegate = self
