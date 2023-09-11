@@ -71,6 +71,6 @@ public class WeekAllDayEventView: EventView {
     private func resetColors() {
         leftBorderView.backgroundColor = color
         backgroundColor = selected ? color : color.withAlphaComponent(0.3)
-        titleLabel.textColor = selected ? .white : color
+        titleLabel.textColor = selected ? .white : color.hsb()
     }
 }
