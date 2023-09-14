@@ -456,7 +456,7 @@ public class DayPlanView: UIView {
 
     private lazy var allDayEventsBackgroundView = BorderedAllDayBackgroundView()
 
-    private lazy var dayColumnsView: UICollectionView = {
+    public private(set) lazy var dayColumnsView: UICollectionView = {
         let layout = DayColumnViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 0
