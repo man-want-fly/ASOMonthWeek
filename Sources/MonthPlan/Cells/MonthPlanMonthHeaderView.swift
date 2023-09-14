@@ -9,8 +9,6 @@ import UIKit
 
 class MonthPlanMonthHeaderView: UICollectionReusableView {
 
-    let label = UILabel()
-
     private var labels: [UILabel] = []
 
     var weekStrings: [String] = [] {
@@ -37,10 +35,6 @@ class MonthPlanMonthHeaderView: UICollectionReusableView {
         backgroundColor = .clear
         autoresizesSubviews = true
 
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.85
-
-        addSubview(label)
         labels.forEach(addSubview)
     }
 
@@ -51,15 +45,13 @@ class MonthPlanMonthHeaderView: UICollectionReusableView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        let h = bounds.height * 0.7
-        label.frame = .init(x: 16, y: 0, width: bounds.width - 16 * 2, height: h)
         let w = bounds.width / CGFloat(labels.count)
         for (index, label) in labels.enumerated() {
             label.frame = .init(
                 x: CGFloat(index) * w,
-                y: h,
+                y: 0,
                 width: w,
-                height: bounds.height - h
+                height: bounds.height
             )
         }
     }
