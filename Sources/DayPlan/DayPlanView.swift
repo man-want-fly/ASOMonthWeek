@@ -1368,7 +1368,7 @@ public class DayPlanView: UIView {
         return views
     }
 
-    func date(at point: CGPoint, rounded: Bool) -> Date? {
+    public func date(at point: CGPoint, rounded: Bool) -> Date? {
         guard dayColumnsView.contentSize.width != .zero else { return nil }
 
         let ptDayColumnsView = convert(point, to: dayColumnsView)

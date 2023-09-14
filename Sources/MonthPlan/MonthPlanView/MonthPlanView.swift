@@ -35,8 +35,15 @@ private let defaultDateFormat = "dMMYY"
 private let rowCacheSize = 40
 
 public class MonthPlanView: UIView {
-
+    
     public var calendar: Calendar = .current
+    
+    public lazy var currentDisplayingMonthDate: Date = .init() {
+        didSet {
+            guard oldValue != currentDisplayingMonthDate else { return }
+            delegate?.monthPlanView(self, didDisplayMonthAt: currentDisplayingMonthDate)
+        }
+    }
 
     var headerHeight: CGFloat = 35
 
@@ -220,8 +227,6 @@ public class MonthPlanView: UIView {
 
             if monthOffset != 0 {
                 let x = xOffsetForMonth(oldStart)
-
-                print("recenterIfNeeded x: \(x), centerMonth: \(centerMonth)")
 
                 eventsView.reloadData()
 
@@ -571,7 +576,7 @@ public class MonthPlanView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        
         setup()
     }
 
@@ -1240,7 +1245,7 @@ extension MonthPlanView: UICollectionViewDataSource {
         let num = numberOfDaysForMonth(at: section)
         return num
     }
-
+    
     public func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -1302,69 +1307,8 @@ extension MonthPlanView: UICollectionViewDataSource {
         dateFormatter.calendar = calendar
         view.weekStrings = dateFormatter.shortStandaloneWeekdaySymbols
 
-        var fmtTemplate = "MMMMYYYY"
-        headerDateFormatter.dateFormat = DateFormatter.dateFormat(
-            fromTemplate: fmtTemplate,
-            options: 0,
-            locale: .current
-        )
-
-        let date = dateStartingMonth(at: indexPath.section)
-        var str = headerDateFormatter.string(from: date).uppercased(with: .current)
-
-        let font = self.monthLabelFont
-        var attrStr = NSMutableAttributedString(
-            string: str,
-            attributes: [
-                .font: font,
-                .foregroundColor: monthLabelTextColor,
-            ]
-        )
-
-        let strRect = attrStr.boundingRect(
-            with: CGSize(
-                width: CGFloat.greatestFiniteMagnitude,
-                height: CGFloat.greatestFiniteMagnitude
-            ),
-            options: .usesLineFragmentOrigin,
-            context: nil
-        )
-
-        let attribs = layout.layoutAttributesForSupplementaryView(
-            ofKind: ReusableConstants.Kind.monthHeader,
-            at: indexPath
-        )!
-
-        if strRect.width > attribs.frame.width {
-            fmtTemplate = "MMMYY"
-            headerDateFormatter.dateFormat = DateFormatter.dateFormat(
-                fromTemplate: fmtTemplate,
-                options: 0,
-                locale: .current
-            )
-
-            str = headerDateFormatter.string(from: date).uppercased(with: .current)
-            attrStr = NSMutableAttributedString(
-                string: str,
-                attributes: [
-                    .font: font,
-                    .foregroundColor: monthLabelTextColor,
-                ]
-            )
-        }
-
-        if gridStyle.contains(.fill) {
-            let para = NSMutableParagraphStyle()
-            para.alignment = UIDevice.current.orientation.isLandscape ? .center : .left
-
-            attrStr.addAttribute(
-                .paragraphStyle,
-                value: para,
-                range: NSRange(location: 0, length: str.count)
-            )
-        }
-
-        view.label.attributedText = attrStr
+        scrollViewDidEndDecelerating(eventsView)
+        
         return view
     }
 
@@ -1588,13 +1532,13 @@ extension MonthPlanView: MonthPlannerViewLayoutDelegate {
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("scrollViewDidScroll xOffset: \(eventsView.contentOffset.x)")
-        print(
-            "scrollViewDidScroll VisibleItems.count: \(eventsView.indexPathsForVisibleItems.count)"
-        )
-
         recenterIfNeeded()
         delegate?.monthPlanViewDidScroll(self)
+    }
+    
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard let idx = eventsView.indexPathsForVisibleItems.first else { return }
+        currentDisplayingMonthDate = dateStartingMonth(at: idx.section)
     }
 
     //    func scrollViewWillEndDragging(

@@ -251,14 +251,15 @@ open class MonthPlanEKViewController: MonthPlanViewController {
         }
     }
 
-    public override func monthPlanView(
+    // MARK: - MonthPlanViewDataSource
+    open override func monthPlanView(
         _ monthPlanView: MonthPlanView,
         numberOfEventsAt date: Date
     ) -> Int {
         events(at: date).count
     }
 
-    public override func monthPlanView(
+    open override func monthPlanView(
         _ monthPlanView: MonthPlanView,
         dateRangeForEventAt index: Int,
         date: Date
@@ -268,7 +269,7 @@ open class MonthPlanEKViewController: MonthPlanViewController {
         return .init(start: event.startDate, end: event.endDate)
     }
 
-    public override func monthPlanView(
+    open override func monthPlanView(
         _ monthPlanView: MonthPlanView,
         cellForEventAt index: Int,
         date: Date
@@ -290,7 +291,7 @@ open class MonthPlanEKViewController: MonthPlanViewController {
         return cell
     }
 
-    public override func monthPlanView(
+    open override func monthPlanView(
         _ monthPlanView: MonthPlanView,
         cellForNewEventAt date: Date
     ) -> EventView {
@@ -301,7 +302,7 @@ open class MonthPlanEKViewController: MonthPlanViewController {
         return evCell
     }
 
-    public override func monthPlanView(
+    open override func monthPlanView(
         _ monthPlanView: MonthPlanView,
         canMoveCellForEventAt index: Int,
         date: Date
@@ -309,6 +310,7 @@ open class MonthPlanEKViewController: MonthPlanViewController {
         event(at: index, date: date).calendar.allowsContentModifications
     }
 
+    // MARK: - MonthPlanViewDelegate
     lazy var titleDateFormatter: DateFormatter = {
         let format = DateFormatter()
         format.dateFormat = "d"
@@ -317,7 +319,7 @@ open class MonthPlanEKViewController: MonthPlanViewController {
         return format
     }()
 
-    public override func monthPlanView(
+    open override func monthPlanView(
         _ monthPlanView: MonthPlanView,
         attributedStringForDayHeaderAt date: Date
     ) -> NSAttributedString? {
@@ -326,7 +328,14 @@ open class MonthPlanEKViewController: MonthPlanViewController {
         //        return NSAttributedString(string: dayStr)
     }
 
-    public override func monthPlanViewDidScroll(_ monthPlanView: MonthPlanView) {
+    open override func monthPlanView(
+        _ monthPlanView: MonthPlanView,
+        didDisplayMonthAt date: Date
+    ) {
+
+    }
+
+    open override func monthPlanViewDidScroll(_ monthPlanView: MonthPlanView) {
         guard
             let range = visibleMonthsRange(),
             range != visibleMonths
@@ -337,14 +346,14 @@ open class MonthPlanEKViewController: MonthPlanViewController {
 
     }
 
-    public override func monthPlanView(
+    open override func monthPlanView(
         _ monthPlanView: MonthPlanView,
         didSelectDayCellAt date: Date
     ) {
         //        fatalError("must subclass")
     }
 
-    public override func monthPlanView(
+    open override func monthPlanView(
         _ monthPlanView: MonthPlanView,
         didShow cell: EventView,
         forNewEventAt date: Date
@@ -358,7 +367,7 @@ open class MonthPlanEKViewController: MonthPlanViewController {
         //        [self showPopoverForNewEvent:ev withCell:cell];
     }
 
-    public override func monthPlanView(
+    open override func monthPlanView(
         _ monthPlanView: MonthPlanView,
         willStartMovingEventAt index: Int,
         date: Date
@@ -366,7 +375,7 @@ open class MonthPlanEKViewController: MonthPlanViewController {
 
     }
 
-    public override func monthPlanView(
+    open override func monthPlanView(
         _ monthPlanView: MonthPlanView,
         didMoveEventAt index: Int,
         fromDate: Date,
@@ -375,7 +384,7 @@ open class MonthPlanEKViewController: MonthPlanViewController {
 
     }
 
-    public override func monthPlanView(
+    open override func monthPlanView(
         _ monthPlanView: MonthPlanView,
         shouldSelectEventAt index: Int,
         date: Date
@@ -383,7 +392,7 @@ open class MonthPlanEKViewController: MonthPlanViewController {
         true
     }
 
-    public override func monthPlanView(
+    open override func monthPlanView(
         _ monthPlanView: MonthPlanView,
         didSelectEventAt index: Int,
         date: Date
@@ -392,7 +401,7 @@ open class MonthPlanEKViewController: MonthPlanViewController {
         print("didSelectEvent: \(event)")
     }
 
-    public override func monthPlanView(
+    open override func monthPlanView(
         _ monthPlanView: MonthPlanView,
         shouldDeselectEventAt index: Int,
         date: Date
@@ -400,7 +409,7 @@ open class MonthPlanEKViewController: MonthPlanViewController {
         false
     }
 
-    public override func monthPlanView(
+    open override func monthPlanView(
         _ monthPlanView: MonthPlanView,
         didDeselectEventAt index: Int,
         date: Date

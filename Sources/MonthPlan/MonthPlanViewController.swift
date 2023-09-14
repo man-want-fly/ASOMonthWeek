@@ -75,6 +75,10 @@ open class MonthPlanViewController: UIViewController, MonthPlanViewDataSource, M
     ) -> NSAttributedString? {
         fatalError("must subclass")
     }
+    
+    public func monthPlanView(_ monthPlanView: MonthPlanView, didDisplayMonthAt date: Date) {
+        
+    }
 
     public func monthPlanViewDidScroll(_ monthPlanView: MonthPlanView) {
         fatalError("must subclass")
