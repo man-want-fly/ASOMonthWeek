@@ -174,19 +174,12 @@ open class MonthPlanEKViewController: MonthPlanViewController {
 
         let dic = allEvents(in: range)
 
-        //        print("bg_loadMonthStartingAtDate: \(date)")
-        //        print("bg_loadMonthStartingAtDate dic: \(dic)")
-
         DispatchQueue.main.async {
-            //            print("cachedMonths setObject dic: \(dic)")
             self.cachedMonths.setObject(dic, forKey: date)
-            //self.datesForMonthsToLoad.removeObject(date)
 
             let rangeEnd = self.calendar.nextStartOfMonth(for: date)
             let range = DateRange(start: date, end: rangeEnd)
             self.monthPlanView.reloadEvents(in: range)
-
-            //self.cacheEvents(dic, forMonthStartingAt: date)
         }
     }
 
@@ -324,8 +317,6 @@ open class MonthPlanEKViewController: MonthPlanViewController {
         attributedStringForDayHeaderAt date: Date
     ) -> NSAttributedString? {
         nil
-        //        let dayStr = titleDateFormatter.string(from: date)
-        //        return NSAttributedString(string: dayStr)
     }
 
     open override func monthPlanView(
@@ -350,9 +341,10 @@ open class MonthPlanEKViewController: MonthPlanViewController {
         _ monthPlanView: MonthPlanView,
         didSelectDayCellAt date: Date
     ) {
-        //        fatalError("must subclass")
+        let events = events(at: date)
+        didSelectDay(date, events: events)
     }
-
+    
     open override func monthPlanView(
         _ monthPlanView: MonthPlanView,
         didShow cell: EventView,
@@ -398,7 +390,7 @@ open class MonthPlanEKViewController: MonthPlanViewController {
         date: Date
     ) {
         let event = event(at: index, date: date)
-        print("didSelectEvent: \(event)")
+        didSelect(event: event, at: date)
     }
 
     open override func monthPlanView(
@@ -416,4 +408,8 @@ open class MonthPlanEKViewController: MonthPlanViewController {
     ) {
 
     }
+    
+    open func didSelectDay(_ date: Date, events: [EKEvent]) { }
+    open func didSelect(event: EKEvent, at date: Date) { }
+
 }
