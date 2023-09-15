@@ -11,7 +11,6 @@ import UIKit
 
 enum MonthPlanStyle: Int {
     case events = 0
-    case dots, empty
 }
 
 struct MonthPlanGridStyle: OptionSet {
@@ -66,13 +65,6 @@ public class MonthPlanView: UIView {
         didSet {
             guard monthPlanStyle != oldValue else { return }
             reload()
-        }
-    }
-
-    var eventsDotColor: UIColor = .red {
-        didSet {
-            guard eventsDotColor != oldValue else { return }
-            eventsView.reloadData()
         }
     }
 
@@ -321,15 +313,10 @@ public class MonthPlanView: UIView {
                     removeRow(at: date)
                 }
             }
-        case .dots:
-            eventsView.reloadData()
-        case .empty:
-            break
         }
     }
 
     func reloadEvents(at date: Date) {
-
         switch monthPlanStyle {
         case .events:
             if selectedEventDate == date {
@@ -348,14 +335,6 @@ public class MonthPlanView: UIView {
                     }
                 }
             }
-        case .dots:
-            if let path = indexPath(for: date) {
-                if let cell = eventsView.cellForItem(at: path) as? MonthPlanViewDayCell {
-                    let eventsCounts = dataSource?.monthPlanView(self, numberOfEventsAt: date) ?? 0
-                }
-            }
-        case .empty:
-            break
         }
     }
 
@@ -380,12 +359,6 @@ public class MonthPlanView: UIView {
                     }
                 }
             }
-        case .dots:
-            dateRange.enumerateDays(with: calendar) { day, stop in
-                reloadEvents(at: day)
-            }
-        case .empty:
-            break
         }
     }
 
