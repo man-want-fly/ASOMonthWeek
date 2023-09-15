@@ -35,9 +35,9 @@ private let defaultDateFormat = "dMMYY"
 private let rowCacheSize = 40
 
 public class MonthPlanView: UIView {
-    
+
     public var calendar: Calendar = .current
-    
+
     public lazy var currentDisplayingMonthDate: Date = .init() {
         didSet {
             guard oldValue != currentDisplayingMonthDate else { return }
@@ -47,7 +47,7 @@ public class MonthPlanView: UIView {
 
     var headerHeight: CGFloat = 35
 
-    var dayCellHeaderHeight: CGFloat = 30 {
+    var dayCellHeaderHeight: CGFloat = 24 {
         didSet {
             layout.dayHeaderHeight = dayCellHeaderHeight
             eventsView.reloadData()
@@ -97,9 +97,7 @@ public class MonthPlanView: UIView {
     public var itemHeight: CGFloat = 16
 
     public var calendarBackgroundColor: UIColor = .systemBackground
-
     public var weekDayBackgroundColor: UIColor = .systemGroupedBackground
-
     public var weekendDayBackgroundColor: UIColor = .tertiarySystemGroupedBackground
 
     public var monthLabelTextColor: UIColor = .label
@@ -354,7 +352,6 @@ public class MonthPlanView: UIView {
             if let path = indexPath(for: date) {
                 if let cell = eventsView.cellForItem(at: path) as? MonthPlanViewDayCell {
                     let eventsCounts = dataSource?.monthPlanView(self, numberOfEventsAt: date) ?? 0
-                    cell.showsDot = eventsCounts > 0
                 }
             }
         case .empty:
@@ -441,7 +438,7 @@ public class MonthPlanView: UIView {
         layout.dayHeaderHeight = dayCellHeaderHeight
         layout.delegate = self
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = calendarBackgroundColor
+        collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.showsVerticalScrollIndicator = false
@@ -544,11 +541,7 @@ public class MonthPlanView: UIView {
         return .init(start: startDate, end: end)
     }
 
-    private var dateFormatter: DateFormatter = .init() {
-        didSet {
-
-        }
-    }
+    private var dateFormatter: DateFormatter = .init()
 
     private var dayLabels: [UILabel] = []
 
@@ -576,7 +569,7 @@ public class MonthPlanView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         setup()
     }
 
@@ -862,15 +855,15 @@ public class MonthPlanView: UIView {
         if let eventsView = eventRows[rowStart] {
             return eventsView
         }
-        
+
         guard
             let eventsRowView = reuseQueue.dequeue(
                 by: ReusableConstants.Identifier.eventsRowView
             ) as? EventsRowView
         else { return nil }
-        
+
         let referenceDate = calendar.startOfMonth(for: rowStart)
-        
+
         guard
             let first = calendar.dateComponents([.day], from: referenceDate, to: rowStart).day,
             let numDays = calendar.range(of: .day, in: .weekOfMonth, for: rowStart)?.count
@@ -1234,7 +1227,9 @@ public class MonthPlanView: UIView {
 
 // MARK: - UICollectionViewDataSource
 extension MonthPlanView: UICollectionViewDataSource {
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+    public func numberOfSections(
+        in collectionView: UICollectionView
+    ) -> Int {
         numberOfLoadedMonths
     }
 
@@ -1242,10 +1237,9 @@ extension MonthPlanView: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        let num = numberOfDaysForMonth(at: section)
-        return num
+        numberOfDaysForMonth(at: section)
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -1259,7 +1253,6 @@ extension MonthPlanView: UICollectionViewDataSource {
         cell.headerHeight = dayCellHeaderHeight
 
         let date = dateForDay(at: indexPath)
-        print("displaying date-idx: \(indexPath) : \(date)")
 
         var attrStr = delegate?.monthPlanView(self, attributedStringForDayHeaderAt: date)
 
@@ -1270,27 +1263,24 @@ extension MonthPlanView: UICollectionViewDataSource {
             let para = NSMutableParagraphStyle()
             para.alignment = .center
 
-            let textColor =
-                calendar.isDate(date, inSameDayAs: .init()) ? UIColor.tintColor : UIColor.label
+            let textColor: UIColor =
+                calendar.isDate(date, inSameDayAs: .init()) ? .tintColor : .label
 
             attrStr = NSAttributedString(
                 string: str,
                 attributes: [
-                    NSAttributedString.Key.paragraphStyle: para,
-                    NSAttributedString.Key.foregroundColor: textColor,
+                    .paragraphStyle: para,
+                    .foregroundColor: textColor,
                 ]
             )
         }
 
         cell.dayLabel.attributedText = attrStr
         cell.backgroundColor =
-            calendar.isDateInWeekend(date) ? weekendDayBackgroundColor : weekDayBackgroundColor
+            calendar.isDateInWeekend(date)
+            ? weekendDayBackgroundColor
+            : weekDayBackgroundColor
 
-        if monthPlanStyle == .dots {
-            let eventsCounts = dataSource?.monthPlanView(self, numberOfEventsAt: date) ?? 0
-            cell.showsDot = eventsCounts > 0
-            cell.dotColor = eventsDotColor
-        }
         return cell
     }
 
@@ -1308,7 +1298,7 @@ extension MonthPlanView: UICollectionViewDataSource {
         view.weekStrings = dateFormatter.shortStandaloneWeekdaySymbols
 
         scrollViewDidEndDecelerating(eventsView)
-        
+
         return view
     }
 
@@ -1535,7 +1525,7 @@ extension MonthPlanView: MonthPlannerViewLayoutDelegate {
         recenterIfNeeded()
         delegate?.monthPlanViewDidScroll(self)
     }
-    
+
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard let idx = eventsView.indexPathsForVisibleItems.first else { return }
         currentDisplayingMonthDate = dateStartingMonth(at: idx.section)
