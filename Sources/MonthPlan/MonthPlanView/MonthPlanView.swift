@@ -9,10 +9,6 @@ import OrderedCollections
 import Reusable
 import UIKit
 
-enum MonthPlanStyle: Int {
-    case events = 0
-}
-
 struct MonthPlanGridStyle: OptionSet {
     let rawValue: Int
 
@@ -58,13 +54,6 @@ public class MonthPlanView: UIView {
             guard monthInsets != oldValue else { return }
             //            layout.monthInsets = monthInsets
             setNeedsLayout()
-        }
-    }
-
-    var monthPlanStyle: MonthPlanStyle = .events {
-        didSet {
-            guard monthPlanStyle != oldValue else { return }
-            reload()
         }
     }
 
@@ -298,16 +287,32 @@ public class MonthPlanView: UIView {
     }
 
     func reloadEvents() {
-        switch monthPlanStyle {
-        case .events:
+        deselectEvent(tellDelegate: true)
+
+        let visibleDateRange = visibleDays()
+
+        eventRows.forEach { date, rowView in
+            let rowRange = dateRange(for: rowView)
+
+            if let rowRange, let visibleDateRange, rowRange.intersects(visibleDateRange) {
+                rowView.reload()
+            } else {
+                removeRow(at: date)
+            }
+        }
+    }
+
+    func reloadEvents(at date: Date) {
+        if selectedEventDate == date {
             deselectEvent(tellDelegate: true)
+        }
 
-            let visibleDateRange = visibleDays()
+        let visibleDateRange = visibleDays()
+        eventRows.forEach { date, rowView in
+            let rowRange = dateRange(for: rowView)
 
-            eventRows.forEach { date, rowView in
-                let rowRange = dateRange(for: rowView)
-
-                if let rowRange, let visibleDateRange, rowRange.intersects(visibleDateRange) {
+            if let rowRange, rowRange.contains(date) {
+                if let visibleDateRange, visibleDateRange.contains(date) {
                     rowView.reload()
                 } else {
                     removeRow(at: date)
@@ -316,47 +321,22 @@ public class MonthPlanView: UIView {
         }
     }
 
-    func reloadEvents(at date: Date) {
-        switch monthPlanStyle {
-        case .events:
-            if selectedEventDate == date {
-                deselectEvent(tellDelegate: true)
-            }
-
-            let visibleDateRange = visibleDays()
-            eventRows.forEach { date, rowView in
-                let rowRange = dateRange(for: rowView)
-
-                if let rowRange, rowRange.contains(date) {
-                    if let visibleDateRange, visibleDateRange.contains(date) {
-                        rowView.reload()
-                    } else {
-                        removeRow(at: date)
-                    }
-                }
-            }
-        }
-    }
-
     func reloadEvents(in dateRange: DateRange) {
-        switch monthPlanStyle {
-        case .events:
-            if let selectedEventDate, dateRange.contains(selectedEventDate) {
-                deselectEvent(tellDelegate: true)
-            }
+        if let selectedEventDate, dateRange.contains(selectedEventDate) {
+            deselectEvent(tellDelegate: true)
+        }
 
-            guard let visibleDateRange = visibleDays() else { break }
+        guard let visibleDateRange = visibleDays() else { return }
 
-            eventRows.keys.forEach { date in
-                if let rowView = eventRows[date],
-                    let rowRange = self.dateRange(for: rowView),
-                    rowRange.intersects(dateRange)
-                {
-                    if rowRange.intersects(visibleDateRange) {
-                        rowView.reload()
-                    } else {
-                        removeRow(at: date)
-                    }
+        eventRows.keys.forEach { date in
+            if let rowView = eventRows[date],
+                let rowRange = self.dateRange(for: rowView),
+                rowRange.intersects(dateRange)
+            {
+                if rowRange.intersects(visibleDateRange) {
+                    rowView.reload()
+                } else {
+                    removeRow(at: date)
                 }
             }
         }
@@ -1086,7 +1066,6 @@ public class MonthPlanView: UIView {
     }
 
     @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
-        guard monthPlanStyle == .events else { return }
 
         let pt = gesture.location(in: self)
 
