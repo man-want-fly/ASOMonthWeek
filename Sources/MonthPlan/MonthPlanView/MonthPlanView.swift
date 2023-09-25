@@ -833,15 +833,14 @@ public class MonthPlanView: UIView {
         let referenceDate = calendar.startOfMonth(for: rowStart)
 
         guard
-            let first = calendar.dateComponents([.day], from: referenceDate, to: rowStart).day,
-            let numDays = calendar.range(of: .day, in: .weekOfMonth, for: rowStart)?.count
+            let first = calendar.dateComponents([.day], from: referenceDate, to: rowStart).day
         else { return nil }
 
         eventsRowView.referenceDate = referenceDate
         eventsRowView.isScrollEnabled = false
         eventsRowView.itemHeight = itemHeight
         eventsRowView.eventsRowDelegate = self
-        eventsRowView.daysRange = NSMakeRange(first, numDays)
+        eventsRowView.daysRange = NSMakeRange(first, 7)
 
         eventsRowView.reload()
         cacheRow(eventsRowView, for: rowStart)
