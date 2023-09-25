@@ -192,6 +192,7 @@ public class MonthPlanView: UIView {
     }
 
     // returns YES if the collection view was reloaded
+    @discardableResult
     private func recenterIfNeeded() -> Bool {
         let xOffset = eventsView.contentOffset.x
         let contentWidth = eventsView.contentSize.width
@@ -621,14 +622,16 @@ public class MonthPlanView: UIView {
 
     private func dateForDay(at indexPath: IndexPath) -> Date {
         let components = DateComponents(month: indexPath.section)
-        
+
         let date = calendar.date(byAdding: components, to: startDate)!
-        print("section: \(indexPath.section), item: \(indexPath.item), start: \(startDate), date: \(date)")
-        
+        print(
+            "section: \(indexPath.section), item: \(indexPath.item), start: \(startDate), date: \(date)"
+        )
+
         let newStart = date.firstDayOfFirstWeek
         let newDate = calendar.date(byAdding: .init(day: indexPath.item), to: newStart)!
         print("newStart: \(newStart), newDate: \(newDate)")
-        
+
         return newDate
     }
 
@@ -663,19 +666,19 @@ public class MonthPlanView: UIView {
     }
 
     private func numberOfDaysForMonth(at month: Int) -> Int {
-//        let date = dateStartingMonth(at: month)
+        //        let date = dateStartingMonth(at: month)
         let components = DateComponents(month: month, day: 0)
         let date = calendar.date(byAdding: components, to: startDate)!
-        
+
         let start = calendar.firstDayOfFirstWeekInMonth(for: date)
         let end = calendar.lastDayOfLastWeekOfMonth(for: date)
         let days = calendar.dateComponents([.day], from: start, to: end).day
         print("numberOfDays date: \(date), start: \(start), end: \(end), days: \(days!)")
 
-        return  days! + 1
-        
-//        let range = calendar.range(of: .day, in: .month, for: date)!
-//        return range.count
+        return days! + 1
+
+        //        let range = calendar.range(of: .day, in: .month, for: date)!
+        //        return range.count
     }
 
     private func columnForDay(at indexPath: IndexPath) -> Int {
@@ -1222,7 +1225,7 @@ extension MonthPlanView: UICollectionViewDataSource {
         cell.headerHeight = dayCellHeaderHeight
 
         let date = dateForDay(at: indexPath)
-//        print("cellForItemSection: \(indexPath.section), item: \(indexPath.item), date: \(date)")
+        //        print("cellForItemSection: \(indexPath.section), item: \(indexPath.item), date: \(date)")
 
         var attrStr = delegate?.monthPlanView(self, attributedStringForDayHeaderAt: date)
 
@@ -1281,8 +1284,8 @@ extension MonthPlanView: UICollectionViewDataSource {
             ) as? MonthPlanBackgroundView
         else { return .init(frame: .zero) }
 
-//        let date = dateStartingMonth(at: indexPath.section)
-        
+        //        let date = dateStartingMonth(at: indexPath.section)
+
         let components = DateComponents(month: indexPath.section)
         let date = calendar.date(byAdding: components, to: startDate)!
 
@@ -1500,8 +1503,12 @@ extension MonthPlanView: MonthPlannerViewLayoutDelegate {
     }
 
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        guard let idx = eventsView.indexPathsForVisibleItems.first else { return }
-        currentDisplayingMonthDate = dateStartingMonth(at: idx.section)
+        guard let idx = eventsView.indexPathsForVisibleItems.sorted().middle else { return }
+
+        let components = DateComponents(month: idx.section, day: idx.item)
+        let date = calendar.date(byAdding: components, to: startDate)!
+
+        currentDisplayingMonthDate = date
     }
 
     //    func scrollViewWillEndDragging(
