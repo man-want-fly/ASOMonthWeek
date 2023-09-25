@@ -103,3 +103,13 @@ public extension Calendar {
         return lastDayOfWeekInMonth(for: lastDay)
     }
 }
+
+extension Date {
+    var firstDayOfFirstWeek: Date {
+        Calendar.current.firstDayOfFirstWeekInMonth(for: self)
+    }
+    
+    var lastDayOfLastWeek: Date {
+        Calendar.current.lastDayOfLastWeekOfMonth(for: self)
+    }
+}

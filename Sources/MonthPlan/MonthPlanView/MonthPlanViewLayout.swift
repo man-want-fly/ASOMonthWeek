@@ -77,12 +77,13 @@ public class MonthPlanViewLayout: UICollectionViewFlowLayout {
 
         for month in 0..<numberOfMonths {
 
-            var col = delegate!
-                .collectionView(
-                    collectionView,
-                    layout: self,
-                    columnForDayAt: IndexPath(item: 0, section: month)
-                )
+//            var col = delegate!
+//                .collectionView(
+//                    collectionView,
+//                    layout: self,
+//                    columnForDayAt: IndexPath(item: 0, section: month)
+//                )
+            var col = 0
 
             let daysInMonth = collectionView.numberOfItems(inSection: month)
             let numOfRows = Int((Double(col + daysInMonth) / 7.0).rounded(.up))
