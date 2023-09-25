@@ -1281,7 +1281,10 @@ extension MonthPlanView: UICollectionViewDataSource {
             ) as? MonthPlanBackgroundView
         else { return .init(frame: .zero) }
 
-        let date = dateStartingMonth(at: indexPath.section)
+//        let date = dateStartingMonth(at: indexPath.section)
+        
+        let components = DateComponents(month: indexPath.section)
+        let date = calendar.date(byAdding: components, to: startDate)!
 
         let firstColumn = columnForDay(at: IndexPath(item: 0, section: indexPath.section))
         let lastColumn = columnForDay(at: IndexPath(item: 0, section: indexPath.section + 1))
