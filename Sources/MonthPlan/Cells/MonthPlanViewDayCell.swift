@@ -44,6 +44,6 @@ class MonthPlanViewDayCell: UICollectionViewCell, Reusable {
             height: headerHeight
         )
         
-        dayLabel.frame = headerFrame.insetBy(dx: 1, dy: 1)
+        dayLabel.frame = headerFrame.insetBy(dx: 1, dy: 0)
     }
 }

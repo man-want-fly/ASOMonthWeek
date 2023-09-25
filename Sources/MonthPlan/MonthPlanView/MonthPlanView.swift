@@ -635,6 +635,16 @@ public class MonthPlanView: UIView {
         return newDate
     }
 
+    private func isSameMonth(at indexPath: IndexPath) -> Bool {
+        let components = DateComponents(month: indexPath.section)
+        let month = calendar.date(byAdding: components, to: startDate)!
+
+        let start = month.firstDayOfFirstWeek
+        let date = calendar.date(byAdding: .init(day: indexPath.item), to: start)!
+
+        return calendar.isDate(date, sameMonthAs: month)
+    }
+
     private func indexPath(for date: Date) -> IndexPath? {
         guard loadedDateRange.contains(date) else { return nil }
         let components = calendar.dateComponents([.month, .day], from: startDate, to: date)
@@ -1237,7 +1247,7 @@ extension MonthPlanView: UICollectionViewDataSource {
             para.alignment = .center
 
             let textColor: UIColor =
-                calendar.isDate(date, inSameDayAs: .init()) ? .tintColor : .label
+            calendar.isDate(date, inSameDayAs: .init()) ? .tintColor : isSameMonth(at: indexPath) ? .label : .secondaryLabel
 
             attrStr = NSAttributedString(
                 string: str,
