@@ -622,24 +622,17 @@ public class MonthPlanView: UIView {
 
     private func dateForDay(at indexPath: IndexPath) -> Date {
         let components = DateComponents(month: indexPath.section)
-
-        let date = calendar.date(byAdding: components, to: startDate)!
-        print(
-            "section: \(indexPath.section), item: \(indexPath.item), start: \(startDate), date: \(date)"
-        )
-
-        let newStart = date.firstDayOfFirstWeek
-        let newDate = calendar.date(byAdding: .init(day: indexPath.item), to: newStart)!
-        print("newStart: \(newStart), newDate: \(newDate)")
-
-        return newDate
+        let month = calendar.date(byAdding: components, to: startDate)!
+        let start = calendar.firstDayOfFirstWeekInMonth(for: month)
+        let date = calendar.date(byAdding: .init(day: indexPath.item), to: start)!
+        return date
     }
 
     private func isSameMonth(at indexPath: IndexPath) -> Bool {
         let components = DateComponents(month: indexPath.section)
         let month = calendar.date(byAdding: components, to: startDate)!
 
-        let start = month.firstDayOfFirstWeek
+        let start = calendar.firstDayOfFirstWeekInMonth(for: month)
         let date = calendar.date(byAdding: .init(day: indexPath.item), to: start)!
 
         return calendar.isDate(date, sameMonthAs: month)
@@ -676,19 +669,11 @@ public class MonthPlanView: UIView {
     }
 
     private func numberOfDaysForMonth(at month: Int) -> Int {
-        //        let date = dateStartingMonth(at: month)
         let components = DateComponents(month: month, day: 0)
-        let date = calendar.date(byAdding: components, to: startDate)!
-
-        let start = calendar.firstDayOfFirstWeekInMonth(for: date)
-        let end = calendar.lastDayOfLastWeekOfMonth(for: date)
-        let days = calendar.dateComponents([.day], from: start, to: end).day
-        print("numberOfDays date: \(date), start: \(start), end: \(end), days: \(days!)")
-
-        return days! + 1
-
-        //        let range = calendar.range(of: .day, in: .month, for: date)!
-        //        return range.count
+        let month = calendar.date(byAdding: components, to: startDate)!
+        let start = calendar.firstDayOfFirstWeekInMonth(for: month)
+        let end = calendar.lastDayOfLastWeekOfMonth(for: month)
+        return calendar.numberOfDays(from: start, to: end)
     }
 
     private func columnForDay(at indexPath: IndexPath) -> Int {
