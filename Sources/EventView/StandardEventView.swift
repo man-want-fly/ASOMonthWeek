@@ -174,7 +174,7 @@ public class StandardEventView: EventView {
             range: NSMakeRange(0, str.length)
         )
 
-        let color = selected ? .white : color.hsb()
+        let color = selected ? .white : color.eventTitleColor
         str.addAttribute(
             .foregroundColor,
             value: color,

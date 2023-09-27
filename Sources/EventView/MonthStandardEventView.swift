@@ -70,7 +70,7 @@ class MonthStandardEventView: EventView {
 
     private func resetColors() {
         leftBorderView.backgroundColor = color
-        backgroundColor = selected ? color : color.withAlphaComponent(0.3)
-        titleLabel.textColor = selected ? .white : color.hsb()
+        backgroundColor = selected ? color : color.eventBackgroundColor
+        titleLabel.textColor = selected ? .white : color.eventTitleColor
     }
 }
