@@ -1483,15 +1483,16 @@ public class DayPlanView: UIView {
         selectedCellIndexPath = path
         selectedCellType = eventType
 
-        guard tellDelegate else { return }
+        guard tellDelegate, let delegate else { return }
 
-        delegate?
-            .dayPlanView(
-                self,
-                didSelectEventOfType: eventType,
-                at: path.item,
-                date: date
-            )
+        delegate.dayPlanView(
+            self,
+            didSelectEventOfType: eventType,
+            at: path.item,
+            date: date
+        ) { [weak self] in
+            self?.deselectEvent(tellDelegate: tellDelegate)
+        }
     }
 
     func deselectEvent() {

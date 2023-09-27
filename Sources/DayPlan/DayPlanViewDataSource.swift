@@ -43,7 +43,8 @@ public protocol DayPlanViewDataSource: AnyObject {
         at index: Int,
         date: Date
     ) -> DateRange?
-
+    
+    @discardableResult
     func dayPlanView(
         _ dayPlanView: DayPlanView,
         shouldStartMovingEventOfType eventType: EventType,
@@ -51,6 +52,7 @@ public protocol DayPlanViewDataSource: AnyObject {
         date: Date
     ) -> Bool
 
+    @discardableResult
     func dayPlanView(
         _ dayPlanView: DayPlanView,
         canMoveEventOfType eventType: EventType,
@@ -75,6 +77,7 @@ public protocol DayPlanViewDataSource: AnyObject {
         at date: Date
     ) -> EventView?
 
+    @discardableResult
     func dayPlanView(
         _ dayPlanView: DayPlanView,
         canCreateNewEventOfType eventType: EventType,
@@ -137,6 +140,7 @@ public protocol DayPlanViewDelegate: AnyObject {
         _ dayPlanView: DayPlanView
     )
 
+    @discardableResult
     func dayPlanView(
         _ dayPlanView: DayPlanView,
         shouldSelectEventOfType eventType: EventType,
@@ -144,11 +148,13 @@ public protocol DayPlanViewDelegate: AnyObject {
         date: Date
     ) -> Bool
 
+    @discardableResult
     func dayPlanView(
         _ dayPlanView: DayPlanView,
         didSelectEventOfType eventType: EventType,
         at index: Int,
-        date: Date
+        date: Date,
+        completion: (() -> Void)?
     ) -> Bool
 
     func dayPlanView(

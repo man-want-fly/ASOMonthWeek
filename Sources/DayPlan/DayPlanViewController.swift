@@ -228,7 +228,8 @@ open class DayPlanViewController: UIViewController, DayPlanViewDataSource, DayPl
         _ dayPlanView: DayPlanView,
         didSelectEventOfType eventType: EventType,
         at index: Int,
-        date: Date
+        date: Date,
+        completion: (() -> Void)?
     ) -> Bool {
         true
     }

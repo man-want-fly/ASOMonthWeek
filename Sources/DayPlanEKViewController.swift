@@ -426,15 +426,16 @@ open class DayPlanEKViewController: DayPlanViewController {
         _ dayPlanView: DayPlanView,
         didSelectEventOfType eventType: EventType,
         at index: Int,
-        date: Date
+        date: Date,
+        completion: (() -> Void)?
     ) -> Bool {
         guard let event = event(ofType: eventType, at: index, date: date) else { return false }
         print("didSelectEventOfType event: \(event)")
-        didSelect(event: event)
+        didSelect(event: event, date: date, completion: completion)
         return true
     }
     
-    open func didSelect(event: EKEvent) {
+    open func didSelect(event: EKEvent, date: Date, completion: (() -> Void)?) {
         
     }
 
