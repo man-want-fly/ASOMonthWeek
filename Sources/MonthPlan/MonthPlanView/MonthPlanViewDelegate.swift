@@ -54,7 +54,8 @@ public protocol MonthPlanViewDelegate: AnyObject {
     func monthPlanView(
         _ monthPlanView: MonthPlanView,
         didSelectEventAt index: Int,
-        date: Date
+        date: Date,
+        completion: (() -> Void)?
     )
 
     func monthPlanView(

@@ -387,10 +387,11 @@ open class MonthPlanEKViewController: MonthPlanViewController {
     open override func monthPlanView(
         _ monthPlanView: MonthPlanView,
         didSelectEventAt index: Int,
-        date: Date
+        date: Date,
+        completion: (() -> Void)?
     ) {
         let event = event(at: index, date: date)
-        didSelect(event: event, at: date)
+        didSelect(event: event, at: date, completion: completion)
     }
 
     open override func monthPlanView(
@@ -398,7 +399,7 @@ open class MonthPlanEKViewController: MonthPlanViewController {
         shouldDeselectEventAt index: Int,
         date: Date
     ) -> Bool {
-        false
+        true
     }
 
     open override func monthPlanView(
@@ -410,6 +411,6 @@ open class MonthPlanEKViewController: MonthPlanViewController {
     }
     
     open func didSelectDay(_ date: Date, events: [EKEvent]) { }
-    open func didSelect(event: EKEvent, at date: Date) { }
+    open func didSelect(event: EKEvent, at date: Date, completion: (() -> Void)?) { }
 
 }

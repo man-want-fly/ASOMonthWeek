@@ -1413,13 +1413,17 @@ extension MonthPlanView: EventsRowViewDelegate {
         selectedEventDate = date
         selectedEventIndex = indexPath.item
 
-        delegate?.monthPlanView(self, didSelectEventAt: indexPath.item, date: date)
+        delegate?.monthPlanView(self, didSelectEventAt: indexPath.item, date: date) { [weak self] in
+            self?.deselectEvent(tellDelegate: true)
+        }
     }
 
     public func eventsRowView(
         _ eventsRowView: EventsRowView,
         shouldDeselectCellAt indexPath: IndexPath
     ) -> Bool {
+        guard allowSelection else { return false }
+
         let comps = DateComponents(day: indexPath.section)
         let date = calendar.date(byAdding: comps, to: eventsRowView.referenceDate!)!
 
@@ -1443,12 +1447,7 @@ extension MonthPlanView: EventsRowViewDelegate {
             selectedEventIndex = 0
         }
 
-        delegate?
-            .monthPlanView(
-                self,
-                didSelectEventAt: indexPath.item,
-                date: date
-            )
+        delegate?.monthPlanView(self, didDeselectEventAt: indexPath.item, date: date)
     }
 
     public func eventsRowView(

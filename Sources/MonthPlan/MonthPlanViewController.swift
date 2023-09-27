@@ -127,7 +127,8 @@ open class MonthPlanViewController: UIViewController, MonthPlanViewDataSource, M
     public func monthPlanView(
         _ monthPlanView: MonthPlanView,
         didSelectEventAt index: Int,
-        date: Date
+        date: Date,
+        completion: (() -> Void)?
     ) {
         fatalError("must subclass")
     }

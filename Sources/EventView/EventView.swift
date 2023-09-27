@@ -30,7 +30,7 @@ public class EventView: UIView, ReusableObject {
     required override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .gray
+        backgroundColor = .clear
         clipsToBounds = true
     }
     
