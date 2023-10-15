@@ -32,7 +32,10 @@ public class EventKitSupport: NSObject {
         case .restricted, .denied:
             accessDeniedForCalendar()
             completion(false)
-        case .authorized:
+        case .authorized, .fullAccess:
+            accessGrantedForCalendar()
+            completion(true)
+        case .writeOnly:
             accessGrantedForCalendar()
             completion(true)
         @unknown default:
@@ -74,20 +77,26 @@ public class EventKitSupport: NSObject {
     }
 
     private func requestCalendarAccess(completion: @escaping (Bool) -> Void) {
-        eventStore.requestAccess(to: .event) { (granted, error) in
+        eventStore.requestAccessToEvent { (granted, error) in
             DispatchQueue.main.async {
                 if granted {
                     self.accessGrantedForCalendar()
                     completion(true)
                 }
             }
-            
         }
     }
 
     private func accessDeniedForCalendar() {
         let title = NSLocalizedString("Warning", comment: "")
         let msg = NSLocalizedString("Access to the calendar was not authorized", comment: "")
+        let alert = UIAlertView(title: title, message: msg, delegate: nil, cancelButtonTitle: "OK")
+        alert.show()
+    }
+    
+    private func accessWriteOnlyForCalendar() {
+        let title = NSLocalizedString("Warning", comment: "")
+        let msg = NSLocalizedString("Access to the calendar was write only", comment: "")
         let alert = UIAlertView(title: title, message: msg, delegate: nil, cancelButtonTitle: "OK")
         alert.show()
     }
@@ -119,5 +128,17 @@ extension EventKitSupport: UIAlertViewDelegate {
         
         saveCompletion = nil
         savedEvent = nil
+    }
+}
+
+
+extension EKEventStore {
+    
+    func requestAccessToEvent(completion: @escaping EKEventStoreRequestAccessCompletionHandler) {
+        if #available(iOS 17.0, *) {
+            requestFullAccessToEvents(completion: completion)
+        } else {
+            requestAccess(to: .event, completion: completion)
+        }
     }
 }
